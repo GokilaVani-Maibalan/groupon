@@ -1,0 +1,205 @@
+.rows{
+    display: flex;
+    flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+}
+
+.rowdivision {
+ 
+    display: flex;
+    align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+}
+
+.signup-form{
+    flex: 1;
+    max-width: 400px;
+    margin-right: 5rem; 
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.signup-image{
+    flex: 1;
+    max-width: 400px;
+    margin-top: 70px;
+}
+
+.signup-image img{
+    width: 100%;
+  border-radius: 5px;
+}
+
+
+
+
+.row2 img{
+  flex: 1;
+  max-width: 400px;
+  max-height: 300px;
+  margin-top: 70px;
+}
+
+.row2-sec2{
+  flex: 1;
+  max-width: 400px;
+  margin-right: 5rem; 
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.row3{
+  background-image: url(https://img.grouponcdn.com/seocms/4RrKVXpuxad4BXwZGfPkMqKHji8v/grpn-diagonals-green-scaled_jpg-2560x1706);
+  background-position: center center;
+  background-size: cover;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    padding: 1rem 3rem 1rem 3rem;
+    border-radius: 10px;
+    margin: 0 auto 2% auto;
+    width: 50%;
+  color: white;
+  /* margin-top: 2% ;
+  margin-bottom: -2%; */
+  /* max-width: 800px; */
+  max-height: 200px;
+}
+
+.row3-flex{
+  display: flex;
+  width: 100%;
+}
+
+.row3-col{
+  flex: 1;
+}
+
+.row3-p{
+  text-align: center;
+}
+
+
+.row4-sec1 h3{
+  text-align: center;
+}
+.row4-sec2{
+  border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+}
+
+.tristackrow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+    width: 100%;
+    border-bottom: solid 1px black;
+}
+
+.tristackrow-col1 img{
+  width:50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+}
+
+.tristackrow-col2
+{
+  width: 80%;
+}
+
+.row5-main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.row5 img{
+  padding: 15px;
+  flex: 1;
+  max-width: 400px;
+  max-height: 300px;
+  margin-top: 70px;
+  border-radius: 15px;
+}
+
+.row5-content{
+  flex: 1;
+  max-width: 400px;
+  margin-right: 5rem; 
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+.row6{
+  background-image: url(https://img.grouponcdn.com/seocms/23XtpLfoJs1CApEPf4WPCrZs3e5S/footer-widget-background_jpeg-1800x1200);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        left: 50%;
+        margin: auto;
+        padding: 3% 0 2%;
+        position: relative;
+        transform: translateX(-50%);
+        width: 100vw;
+}
+
+.links{
+       display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+        text-decoration: none;
+        
+}
+.links a{
+  text-decoration: none;
+  color: green;
+}
+.content1{
+     grid-template-columns: 2fr 1fr;
+        width: 75%;
+}
+
+.content{
+  justify-items: center;
+  text-align: center;
+  width: 100%;
+}
+.subscribe{
+  margin: auto;
+        text-align: center;
+        width: 100%
+}
+
+.content2{
+  display: grid;
+        grid-template-columns: 1fr 2fr;
+        padding: 20px 0;
+        width: 75%;
+}
+
+.terms{
+  display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+}
+
+.terms a {
+  padding-right: 1rem;
+  color: green;
+}
+.content3{
+  text-align: left;
+  width: 75%;
+}

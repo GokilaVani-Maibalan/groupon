@@ -1,0 +1,73 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+    font-family: 'Outfit', sans-serif;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+html,body{
+  height: 100%;
+  margin: 0;
+}
+/* .auth-a{
+    text-decoration: none;
+    color: #0F79F3;
+  }
+
+  
+
+.auth {
+    position: relative;
+    top:70px;
+    padding: 30px;
+    border-radius: 5px;
+    background-color: #131920;
+    color: white;
+}
+
+.auth-head{
+  text-align: center;
+}
+
+
+input{
+  border-radius: 5px;
+  border: 1px solid gray;
+  font-weight: 600;
+  font-size: x-small;
+  background-color: #131920;
+} */
+
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+}

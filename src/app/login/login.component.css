@@ -1,0 +1,44 @@
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    
+  }
+  .auth-head{
+    text-align: center;
+  }
+  .login-container div {
+    margin-bottom: 15px;
+  }
+  
+  .login-container label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .login-container input {
+    width: 100%;
+    margin: 0px;
+    box-sizing: border-box;
+  padding: 15px;
+   
+  }
+  
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0F79F3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-container button:disabled {
+    background-color: #3a3e44;
+  }
+  
+  .login-container span {
+    color: red;
+    font-size: 12px;
+  }
+  

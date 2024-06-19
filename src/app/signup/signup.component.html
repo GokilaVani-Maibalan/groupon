@@ -1,0 +1,64 @@
+<div class="signup-container auth">
+  <!-- <h1 class="auth-head">Sign Up</h1> -->
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div>
+      <!-- <label for="businessName">Business Name</label> -->
+      <input type="text" id="businessName" placeholder="Business Name" formControlName="businessName">
+      <div *ngIf="signupForm.controls.businessName.invalid && signupForm.controls.businessName.touched">
+        <span *ngIf="signupForm.controls.businessName.errors?.['required']">Please enter your Business Name </span>
+      </div>
+    </div>
+    <div>
+      <!-- <label for="firstName">First Name:</label> -->
+      <input type="text" id="businessAddress" placeholder="Business Address" formControlName="businessAddress">
+      <div *ngIf="signupForm.controls.businessAddress.invalid && signupForm.controls.businessAddress.touched">
+        <span *ngIf="signupForm.controls.businessAddress.errors?.['required']">Please enter your Business Address</span>
+      </div>
+    </div>
+    <div>
+      <!-- <label for="firstName">First Name:</label> -->
+      <input type="text" id="firstName" formControlName="firstName" placeholder="First & Last Name">
+      <div *ngIf="signupForm.controls.firstName.invalid && signupForm.controls.firstName.touched">
+        <span *ngIf="signupForm.controls.firstName.errors?.['required']">Please enter your Full Name</span>
+      </div>
+    </div>
+    <div>
+      <!-- <label for="email">Email:</label> -->
+      <input type="email" id="email" formControlName="email" placeholder="Email Address">
+      <div *ngIf="signupForm.controls.email.invalid && signupForm.controls.email.touched">
+        <span *ngIf="signupForm.controls.email.errors?.['required']">Please enter your Email Address</span>
+        <span *ngIf="signupForm.controls.email.errors?.['email']">Enter a valid email</span>
+      </div>
+    </div>
+    <div>
+      <!-- <label for="email">Email:</label> -->
+      <input type="phoneNumber" id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number">
+      <div *ngIf="signupForm.controls.phoneNumber.invalid && signupForm.controls.phoneNumber.touched">
+        <span *ngIf="signupForm.controls.phoneNumber.errors?.['required']">Please enter your phone number</span>
+        <span *ngIf="signupForm.controls.phoneNumber.errors?.['pattern']">Enter a valid phone number</span>
+      </div>
+    </div>
+    <div>
+      <!-- <label for="password">Password:</label> -->
+      <input type="password" id="password" formControlName="password" placeholder="Password">
+      <div *ngIf="signupForm.controls.password.invalid && signupForm.controls.password.touched">
+        <span *ngIf="signupForm.controls.password.errors?.['required']">Password is required.</span>
+        <span *ngIf="signupForm.controls.password.errors?.['minlength']">Password must be at least 6 characters long.</span>
+      </div>
+    </div>
+    <div>
+      <label for="business">Type Of Business</label>
+      <select id="business" formControlName="business">
+        <option value="" disabled>Choose a category</option>
+        <option *ngFor="let business of businesses" [value]="business">{{ business }}</option>
+      </select>
+      <div *ngIf="signupForm.get('country')?.invalid && signupForm.get('country')?.touched">
+        Type of Business is required.
+      </div>
+    </div>
+    <button type="submit" [disabled]="signupForm.invalid">Signup</button>
+  </form>
+  <!-- <div class="auth-head">
+    Already have an account? <a class="auth-a" routerLink="/login">Login here</a>
+  </div> -->
+</div>
