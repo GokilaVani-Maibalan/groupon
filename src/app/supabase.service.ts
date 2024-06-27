@@ -73,4 +73,28 @@ export class SupabaseService {
       return { user: null, error: error as AuthError };
     }
   }
+
+  async uploadFile(file: File): Promise<any> {
+    const fileName = `${Date.now()}_${file.name}`;
+    const { data, error } = await this.supabase.storage
+      .from('merchants')
+      .upload(fileName, file);
+
+    if (error) {
+      console.error('File upload error:', error);
+      return null;
+    }
+
+    // const {  tax_id_doc, error: urlError } = await this.supabase
+    //   .storage
+    //   .from('merchants')
+    //   .getPublicUrl(fileName);
+
+    // if (urlError) {
+    //   console.error('Error getting public URL:', urlError);
+    //   return null;
+    // }
+
+    return { data };
+  }
 }

@@ -19,7 +19,7 @@
         <span *ngIf="signupForm.controls.businessAddress.errors?.['required']">Please enter your Business Address</span>
       </div>
     </div>
-    <div>
+   
       <div>
         <!-- <label for="businessName">Business Name</label> -->
         <input type="text" id="taxId" placeholder="Tax Id" formControlName="taxId">
@@ -27,13 +27,8 @@
           <span *ngIf="signupForm.controls.taxId.errors?.['required']">Please enter your Tax Id </span>
         </div>
       </div>
+     
       <div>
-        <!-- <label for="businessName">Business Name</label> -->
-        <input type="file" id="taxIdDoc" placeholder="Tax Id Document" formControlName="taxIdDoc">
-        <div *ngIf="signupForm.controls.taxIdDoc.invalid && signupForm.controls.taxIdDoc.touched">
-          <span *ngIf="signupForm.controls.taxIdDoc.errors?.['required']">Please upload your Tax Id Document</span>
-        </div>
-      </div>
       <!-- <label for="firstName">First Name:</label> -->
       <input type="text" id="firstName" formControlName="firstName" placeholder="First & Last Name">
       <div *ngIf="signupForm.controls.firstName.invalid && signupForm.controls.firstName.touched">
@@ -65,7 +60,7 @@
       </div>
     </div>
     <div>
-      <label for="business">Type Of Business</label>
+      <label for="business" style="font-size: small; font-weight: 200; color: gray;">Type Of Business</label>
       <select id="business" formControlName="typeofBusiness">
         <option value="" disabled>Choose a category</option>
         <option *ngFor="let business of businesses" [value]="business">{{ business }}</option>
@@ -74,6 +69,14 @@
         Type of Business is required.
       </div>
     </div>
+        <div>
+        <label for="taxIdDoc" style="font-size: small; font-weight: 200; color: gray;">Tax Id Document</label >
+        <input type="file" id="taxIdDoc" placeholder="Tax Id Document" formControlName="taxIdDoc" (change)="onFileSelected($event)" >
+        <div *ngIf="signupForm.controls.taxIdDoc.invalid && signupForm.controls.taxIdDoc.touched">
+          <span *ngIf="signupForm.controls.taxIdDoc.errors?.['required']">Please upload your Tax Id Document</span>
+        </div>
+      </div>
+    
     <button type="submit">Signup</button>
   </form>
   <!-- <div class="auth-head">

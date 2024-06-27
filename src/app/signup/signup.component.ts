@@ -41,13 +41,19 @@ export class SignupComponent {
     'Hotels & Travel',
   ];
 
+  selectedFile: File | null = null;
+
   constructor(
     private router: Router,
     private supabaseService: SupabaseService
   ) {}
 
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   async onSubmit(): Promise<void> {
-    if (this.signupForm.valid) {
+    if (this.signupForm.valid && this.selectedFile) {
       const email = this.signupForm.get('email')!.value as string;
       const phoneNumber = this.signupForm.get('phoneNumber')!.value as string;
       const firstName = this.signupForm.get('firstName')!.value as string;
@@ -67,28 +73,37 @@ export class SignupComponent {
         } else {
           const user = this.supabaseService.signUp(email, password);
           if (user !== null && user !== undefined) {
-            const merchantDetails = {
-              email: email,
-              phone_number: phoneNumber,
-              name: firstName,
-              business_name: businessName,
-              business_address: businessAddress,
-              tax_id: taxId,
-              tax_id_doc: taxIdDoc,
-              typeof_business: typeofBusiness,
-              password: password,
-            };
-            await this.supabaseService.storeUserData(
-              merchantDetails,
-              'merchants'
-            );
-            alert(
-              'Merchant registered successfully! Please check your email for a login link.'
-            );
-            this.signupForm.reset();
-            this.router.navigate(['/get-started']);
+            if (this.selectedFile) {
+              const fileUrl = await this.supabaseService.uploadFile(
+                this.selectedFile
+              );
+              if (fileUrl) {
+                const merchantDetails = {
+                  email: email,
+                  phone_number: phoneNumber,
+                  name: firstName,
+                  business_name: businessName,
+                  business_address: businessAddress,
+                  tax_id: taxId,
+                  tax_id_doc: taxIdDoc,
+                  typeof_business: typeofBusiness,
+                  password: password,
+                };
+                await this.supabaseService.storeUserData(
+                  merchantDetails,
+                  'merchants'
+                );
+                alert(
+                  'Merchant registered successfully! Please check your email for a login link.'
+                );
+                this.signupForm.reset();
+                this.router.navigate(['/get-started']);
 
-            console.log('value got');
+                console.log('value got');
+              } else {
+                alert('File upload failed!');
+              }
+            }
           }
         }
       } catch (error) {
