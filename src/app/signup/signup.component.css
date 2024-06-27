@@ -3,8 +3,7 @@
   min-width: 400px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
-  /* margin: 0 auto;
-   */
+  margin: 0 auto;
  
 }
 
@@ -51,3 +50,10 @@ select{
   font-size: 12px;
 }
 
+
+
+.logo img{
+  width: 249.8px;
+  height: 115.8px;
+margin-left:80px   
+}

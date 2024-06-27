@@ -1,35 +1,76 @@
-import { createClient } from '@supabase/supabase-js';
+import { Injectable } from '@angular/core';
+import { createClient, SupabaseClient, AuthError } from '@supabase/supabase-js';
 
+@Injectable({
+  providedIn: 'root',
+})
+export class SupabaseService {
+  private supabaseUrl = 'https://yuivbdseztzjpvsxolkt.supabase.co';
+  private supabaseKey =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1aXZiZHNlenR6anB2c3hvbGt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg5NDc2NTMsImV4cCI6MjAzNDUyMzY1M30.fiSFTl6c55ix-xe_KjU4ox0-EonMvidUus7-iG39Hhc';
+  private supabase: SupabaseClient;
 
-const supabaseUrl = 'https://cimqazigxnrtbplwdnpi.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpbXFhemlneG5ydGJwbHdkbnBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTgyODQ5ODAsImV4cCI6MjAzMzg2MDk4MH0.7ll58hqWEwoXa1Z2tevKglBo0RF9JBG6ty-IuExYjHA';
-export const supabase = createClient(supabaseUrl, supabaseKey);
+  constructor() {
+    this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+  }
 
+  async checkUserExists(email: string): Promise<boolean> {
+    try {
+      const { data, error } = await this.supabase
+        .from('merchants')
+        .select('id')
+        .eq('email', email)
+        .single();
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error checking user:', error.message);
+        throw error;
+      }
+      return !!data;
+    } catch (error) {
+      console.error('Error checking user:', error);
+      throw error;
+    }
+  }
 
+  async signUp(email: string, password: string): Promise<any> {
+    const { data: user, error } = await this.supabase.auth.signUp({
+      email,
+      password,
+    });
 
+    if (error) {
+      console.error('Error signing up:', error.message);
+      throw error;
+    }
 
+    return user;
+  }
 
-// import { Injectable } from '@angular/core';
-// import { createClient, SupabaseClient } from '@supabase/supabase-js';
+  async storeUserData(data: any, merchants: string): Promise<any> {
+    const { data: merchantData, error } = await this.supabase
+      .from(merchants)
+      .insert([data]);
 
-// @Injectable({
-//   providedIn: 'root',
-// })
-// export class SupabaseService {
-//   private supabase: SupabaseClient;
+    if (error) {
+      console.error('Error storing user data:', error.message);
+      throw error;
+    }
 
-//   constructor() {
-//     this.supabase = createClient('your-supabase-url', 'your-supabase-anon-key');
-//   }
+    return merchantData;
+  }
 
-//   async signInWithGitHub() {
-//     const { user, session, error } = await this.supabase.auth.signInWithOAuth({
-//       provider: 'github',
-//     });
-//     if (error) {
-//       console.error('Error signing in with GitHub:', error);
-//     } else {
-//       console.log('Signed in successfully:', user);
-//     }
-//   }
-// }
+  async signIn(
+    email: string,
+    password: string
+  ): Promise<{ user: any; error: AuthError | null }> {
+    try {
+      const { data: user, error } = await this.supabase.auth.signInWithPassword(
+        { email, password }
+      );
+      return { user, error };
+    } catch (error) {
+      console.error('Error signing in:', error);
+      return { user: null, error: error as AuthError };
+    }
+  }
+}

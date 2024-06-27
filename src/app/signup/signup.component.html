@@ -1,5 +1,9 @@
+
 <div class="signup-container auth">
   <!-- <h1 class="auth-head">Sign Up</h1> -->
+  <div class="logo">
+    <img src="https://www1.grouponcdn.com/merchant/center/login/assets/merchant-logo-vertical-215f9c282a.svg"/>
+</div>
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div>
       <!-- <label for="businessName">Business Name</label> -->
@@ -16,6 +20,20 @@
       </div>
     </div>
     <div>
+      <div>
+        <!-- <label for="businessName">Business Name</label> -->
+        <input type="text" id="taxId" placeholder="Tax Id" formControlName="taxId">
+        <div *ngIf="signupForm.controls.taxId.invalid && signupForm.controls.taxId.touched">
+          <span *ngIf="signupForm.controls.taxId.errors?.['required']">Please enter your Tax Id </span>
+        </div>
+      </div>
+      <div>
+        <!-- <label for="businessName">Business Name</label> -->
+        <input type="file" id="taxIdDoc" placeholder="Tax Id Document" formControlName="taxIdDoc">
+        <div *ngIf="signupForm.controls.taxIdDoc.invalid && signupForm.controls.taxIdDoc.touched">
+          <span *ngIf="signupForm.controls.taxIdDoc.errors?.['required']">Please upload your Tax Id Document</span>
+        </div>
+      </div>
       <!-- <label for="firstName">First Name:</label> -->
       <input type="text" id="firstName" formControlName="firstName" placeholder="First & Last Name">
       <div *ngIf="signupForm.controls.firstName.invalid && signupForm.controls.firstName.touched">
@@ -48,7 +66,7 @@
     </div>
     <div>
       <label for="business">Type Of Business</label>
-      <select id="business" formControlName="business">
+      <select id="business" formControlName="typeofBusiness">
         <option value="" disabled>Choose a category</option>
         <option *ngFor="let business of businesses" [value]="business">{{ business }}</option>
       </select>
@@ -56,7 +74,7 @@
         Type of Business is required.
       </div>
     </div>
-    <button type="submit" [disabled]="signupForm.invalid">Signup</button>
+    <button type="submit">Signup</button>
   </form>
   <!-- <div class="auth-head">
     Already have an account? <a class="auth-a" routerLink="/login">Login here</a>

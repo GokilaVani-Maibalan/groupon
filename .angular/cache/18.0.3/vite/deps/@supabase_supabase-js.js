@@ -1154,7 +1154,7 @@ var PostgrestQueryBuilder = class {
 };
 
 // node_modules/@supabase/postgrest-js/dist/module/version.js
-var version = "1.15.2";
+var version = "1.15.5";
 
 // node_modules/@supabase/postgrest-js/dist/module/constants.js
 var DEFAULT_HEADERS = { "X-Client-Info": `postgrest-js/${version}` };
@@ -2994,12 +2994,17 @@ var StorageFileApi = class {
    * Signed upload URLs can be used to upload files to the bucket without further authentication.
    * They are valid for 2 hours.
    * @param path The file path, including the current file name. For example `folder/image.png`.
+   * @param options.upsert If set to true, allows the file to be overwritten if it already exists.
    */
-  createSignedUploadUrl(path) {
+  createSignedUploadUrl(path, options) {
     return __awaiter4(this, void 0, void 0, function* () {
       try {
         let _path = this._getFinalPath(path);
-        const data = yield post(this.fetch, `${this.url}/object/upload/sign/${_path}`, {}, { headers: this.headers });
+        const headers = Object.assign({}, this.headers);
+        if (options === null || options === void 0 ? void 0 : options.upsert) {
+          headers["x-upsert"] = "true";
+        }
+        const data = yield post(this.fetch, `${this.url}/object/upload/sign/${_path}`, {}, { headers });
         const url = new URL(this.url + data.url);
         const token = url.searchParams.get("token");
         if (!token) {
@@ -3030,11 +3035,17 @@ var StorageFileApi = class {
    *
    * @param fromPath The original file path, including the current file name. For example `folder/image.png`.
    * @param toPath The new file path, including the new file name. For example `folder/image-new.png`.
+   * @param options The destination options.
    */
-  move(fromPath, toPath) {
+  move(fromPath, toPath, options) {
     return __awaiter4(this, void 0, void 0, function* () {
       try {
-        const data = yield post(this.fetch, `${this.url}/object/move`, { bucketId: this.bucketId, sourceKey: fromPath, destinationKey: toPath }, { headers: this.headers });
+        const data = yield post(this.fetch, `${this.url}/object/move`, {
+          bucketId: this.bucketId,
+          sourceKey: fromPath,
+          destinationKey: toPath,
+          destinationBucket: options === null || options === void 0 ? void 0 : options.destinationBucket
+        }, { headers: this.headers });
         return { data, error: null };
       } catch (error) {
         if (isStorageError(error)) {
@@ -3049,11 +3060,17 @@ var StorageFileApi = class {
    *
    * @param fromPath The original file path, including the current file name. For example `folder/image.png`.
    * @param toPath The new file path, including the new file name. For example `folder/image-copy.png`.
+   * @param options The destination options.
    */
-  copy(fromPath, toPath) {
+  copy(fromPath, toPath, options) {
     return __awaiter4(this, void 0, void 0, function* () {
       try {
-        const data = yield post(this.fetch, `${this.url}/object/copy`, { bucketId: this.bucketId, sourceKey: fromPath, destinationKey: toPath }, { headers: this.headers });
+        const data = yield post(this.fetch, `${this.url}/object/copy`, {
+          bucketId: this.bucketId,
+          sourceKey: fromPath,
+          destinationKey: toPath,
+          destinationBucket: options === null || options === void 0 ? void 0 : options.destinationBucket
+        }, { headers: this.headers });
         return { data: { path: data.Key }, error: null };
       } catch (error) {
         if (isStorageError(error)) {
@@ -3292,7 +3309,7 @@ var StorageFileApi = class {
 };
 
 // node_modules/@supabase/storage-js/dist/module/lib/version.js
-var version3 = "2.5.5";
+var version3 = "2.6.0";
 
 // node_modules/@supabase/storage-js/dist/module/lib/constants.js
 var DEFAULT_HEADERS3 = { "X-Client-Info": `storage-js/${version3}` };
@@ -3485,7 +3502,7 @@ var StorageClient = class extends StorageBucketApi {
 };
 
 // node_modules/@supabase/supabase-js/dist/module/lib/version.js
-var version4 = "2.43.4";
+var version4 = "2.43.5";
 
 // node_modules/@supabase/supabase-js/dist/module/lib/constants.js
 var JS_ENV = "";
