@@ -1,0 +1,105 @@
+.container {
+    display: flex;
+    height: 100vh; /* Ensuring the container takes up the full height */
+    font-weight: 300;
+  }
+  
+  .side-nav {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+    height: 100%; /* Ensuring the side nav takes up the full height */
+    box-sizing: border-box; /* Ensuring padding and border are included in width/height */
+  }
+  
+  .side-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .side-nav ul li {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .side-nav ul li:hover {
+    background-color: #ddd;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto; /* Adding scroll if content exceeds the container's height */
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  
+  .highlight{
+    padding: 1rem;
+    background-color: #f6f7f8;
+    border-radius: .5rem;
+    font-size: 14px;
+    margin: 1rem 0
+  }
+
+  .count {
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50%;
+    border:none;
+    cursor: pointer;
+  }
+  
+  .spacer {
+  flex: 1 1 auto;
+}
+
+
+
+.menu-label {
+  margin-left: 8px;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #46da46;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+}
+
+.nav-title {
+  font-weight: bold;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: small;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-button i {
+  font-size: 1.2rem;
+}
+
+.nav-button:hover {
+  text-decoration: underline;
+}

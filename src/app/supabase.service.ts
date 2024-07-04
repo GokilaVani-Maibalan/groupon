@@ -8,7 +8,7 @@ export class SupabaseService {
   private supabaseUrl = 'https://yuivbdseztzjpvsxolkt.supabase.co';
   private supabaseKey =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1aXZiZHNlenR6anB2c3hvbGt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg5NDc2NTMsImV4cCI6MjAzNDUyMzY1M30.fiSFTl6c55ix-xe_KjU4ox0-EonMvidUus7-iG39Hhc';
-  private supabase: SupabaseClient;
+  public supabase: SupabaseClient;
 
   constructor() {
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
@@ -59,42 +59,48 @@ export class SupabaseService {
     return merchantData;
   }
 
-  async signIn(
-    email: string,
-    password: string
-  ): Promise<{ user: any; error: AuthError | null }> {
+  async signIn(email: string, password: string) {
     try {
-      const { data: user, error } = await this.supabase.auth.signInWithPassword(
-        { email, password }
-      );
-      return { user, error };
+      const { data, error } = await this.supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      return data;
     } catch (error) {
       console.error('Error signing in:', error);
       return { user: null, error: error as AuthError };
     }
   }
-
-  async uploadFile(file: File): Promise<any> {
-    const fileName = `${Date.now()}_${file.name}`;
-    const { data, error } = await this.supabase.storage
-      .from('merchants')
-      .upload(fileName, file);
-
-    if (error) {
-      console.error('File upload error:', error);
-      return null;
+  async forgotPassword(email: string) {
+    try {
+      const { error } = await this.supabase.auth.resetPasswordForEmail(email);
+      if (error) {
+        throw error;
+      }
+      console.log('Password reset email sent successfully');
+      return true;
+    } catch (error) {
+      console.error('Error sending password reset email:');
+      return false;
     }
-
-    // const {  tax_id_doc, error: urlError } = await this.supabase
-    //   .storage
-    //   .from('merchants')
-    //   .getPublicUrl(fileName);
-
-    // if (urlError) {
-    //   console.error('Error getting public URL:', urlError);
-    //   return null;
-    // }
-
-    return { data };
   }
+
+  async updatePassword(newPassword: string) {
+    const { data, error } = await this.supabase.auth.updateUser({
+      password: newPassword,
+    });
+    return { data, error };
+  }
+
+  // async uploadFile(file: File) {
+  //   const { data, error } = await this.supabase.storage
+  //     .from('tax.docs')
+  //     .upload(`public/${file.name}`, file);
+
+  //   if (error) {
+  //     throw error;
+  //   }
+
+  //   return data;
+  // }
 }

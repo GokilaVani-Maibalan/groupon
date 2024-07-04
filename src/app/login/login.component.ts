@@ -38,22 +38,23 @@ export class LoginComponent {
       const password = this.loginForm.get('password')!.value as string;
 
       try {
-        const { user, error } = await this.supabaseService.signIn(
-          email,
-          password
-        );
-        if (error) {
-          switch (error.status) {
-            case 400:
-              alert('Invalid login credentials. Please try again.');
-              break;
-            default:
-              alert(`Sign-in error: ${error.message}`);
-          }
-        } else {
-          alert('User signed in successfully');
-          this.router.navigate(['/get-started']);
-        }
+        console.log('email : ' + email);
+        console.log('pass : ' + password);
+        const user = await this.supabaseService.signIn(email, password);
+        console.log('user : ' + JSON.stringify(user));
+        // console.log('error : ' + error);
+        // if (error) {
+        //   switch (error.status) {
+        //     case 400:
+        //       alert('Invalid login credentials. Please try again.');
+        //       break;
+        //     default:
+        //       alert(`Sign-in error: ${error.message}`);
+        //   }
+        // } else {
+        //   alert('User signed in successfully');
+        this.router.navigate(['/get-started']);
+        // }
       } catch (error) {
         console.error('Sign-in process error:', error);
         alert('An error occurred during sign-in');

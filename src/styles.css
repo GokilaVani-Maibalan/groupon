@@ -12,6 +12,14 @@ html,body{
   height: 100%;
   margin: 0;
 }
+
+.container {
+  /* margin-left: 250px; /* Adjust to match sidebar width */
+  /* padding: 20px; */ 
+    height: 100vh;
+    display: flex;
+}
+
 /* .auth-a{
     text-decoration: none;
     color: #0F79F3;

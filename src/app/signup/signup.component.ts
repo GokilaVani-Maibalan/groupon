@@ -21,7 +21,7 @@ export class SignupComponent {
   signupForm = new FormGroup({
     businessName: new FormControl('', Validators.required),
     taxId: new FormControl('', Validators.required),
-    taxIdDoc: new FormControl('', Validators.required),
+    // taxIdDoc: new FormControl('', Validators.required),
     businessAddress: new FormControl('', Validators.required),
     firstName: new FormControl('', Validators.required),
     password: new FormControl('', [
@@ -48,12 +48,12 @@ export class SignupComponent {
     private supabaseService: SupabaseService
   ) {}
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-  }
+  // onFileSelected(event: any): void {
+  //   this.selectedFile = event.target.files[0];
+  // }
 
   async onSubmit(): Promise<void> {
-    if (this.signupForm.valid && this.selectedFile) {
+    if (this.signupForm.valid) {
       const email = this.signupForm.get('email')!.value as string;
       const phoneNumber = this.signupForm.get('phoneNumber')!.value as string;
       const firstName = this.signupForm.get('firstName')!.value as string;
@@ -61,7 +61,7 @@ export class SignupComponent {
       const businessAddress = this.signupForm.get('businessAddress')!
         .value as string;
       const taxId = this.signupForm.get('taxId')!.value as string;
-      const taxIdDoc = this.signupForm.get('taxIdDoc')!.value as string;
+      // const taxIdDoc = this.signupForm.get('taxIdDoc')!.value as string;
       const typeofBusiness = this.signupForm.get('typeofBusiness')!
         .value as string;
       const password = this.signupForm.get('password')!.value as string;
@@ -73,38 +73,37 @@ export class SignupComponent {
         } else {
           const user = this.supabaseService.signUp(email, password);
           if (user !== null && user !== undefined) {
-            if (this.selectedFile) {
-              const fileUrl = await this.supabaseService.uploadFile(
-                this.selectedFile
-              );
-              if (fileUrl) {
-                const merchantDetails = {
-                  email: email,
-                  phone_number: phoneNumber,
-                  name: firstName,
-                  business_name: businessName,
-                  business_address: businessAddress,
-                  tax_id: taxId,
-                  tax_id_doc: taxIdDoc,
-                  typeof_business: typeofBusiness,
-                  password: password,
-                };
-                await this.supabaseService.storeUserData(
-                  merchantDetails,
-                  'merchants'
-                );
-                alert(
-                  'Merchant registered successfully! Please check your email for a login link.'
-                );
-                this.signupForm.reset();
-                this.router.navigate(['/get-started']);
+            // if (this.selectedFile) {
+            //   const fileUrl = await this.supabaseService.uploadFile(
+            //     this.selectedFile
+            //   );
+            //   if (fileUrl) {
+            const merchantDetails = {
+              email: email,
+              phone_number: phoneNumber,
+              name: firstName,
+              business_name: businessName,
+              business_address: businessAddress,
+              tax_id: taxId,
+              // tax_id_doc: taxIdDoc,
+              typeof_business: typeofBusiness,
+              password: password,
+            };
+            await this.supabaseService.storeUserData(
+              merchantDetails,
+              'merchants'
+            );
+            alert('Signup successful! Please wait for admin approval.');
+            this.signupForm.reset();
+            this.router.navigate(['/get-started']);
 
-                console.log('value got');
-              } else {
-                alert('File upload failed!');
-              }
-            }
+            console.log('value got');
           }
+          // else {
+          //   alert('File upload failed!');
+          // }
+          //   }
+          // }
         }
       } catch (error) {
         console.error('Error during registration:', error);

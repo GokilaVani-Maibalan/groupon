@@ -69,13 +69,14 @@
         Type of Business is required.
       </div>
     </div>
-        <div>
+        <!-- <div>
         <label for="taxIdDoc" style="font-size: small; font-weight: 200; color: gray;">Tax Id Document</label >
-        <input type="file" id="taxIdDoc" placeholder="Tax Id Document" formControlName="taxIdDoc" (change)="onFileSelected($event)" >
+        <input type="file" id="taxIdDoc" placeholder="Tax Id Document" formControlName="taxIdDoc" (change)="onFileSelected($event)" accept=".pdf, .docx" >
+        <button type="submit" class="btn btn-primary">Upload</button>
         <div *ngIf="signupForm.controls.taxIdDoc.invalid && signupForm.controls.taxIdDoc.touched">
           <span *ngIf="signupForm.controls.taxIdDoc.errors?.['required']">Please upload your Tax Id Document</span>
         </div>
-      </div>
+      </div> -->
     
     <button type="submit">Signup</button>
   </form>

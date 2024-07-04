@@ -1,0 +1,191 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  button {
+    width: 80%;
+    padding: 10px;
+    background-color: rgb(44, 157, 48);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+
+  }
+
+  .campaign{
+display: block;
+max-width: 600px;
+margin: 0 auto;
+padding-bottom: 200px;
+flex: 1;
+padding: 20px;
+padding-bottom: 60px; 
+  }
+
+  .flex{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .flex-items{
+    display: flex;
+    gap:20px;
+    align-items: center;
+  }
+
+p , li{
+    font-weight: 200;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 150px ;
+  }
+  
+  
+  .tab {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: relative;
+  }
+  
+  .tab-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .tab-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    fill: currentColor;
+  }
+  
+  .tab-content {
+    display: none;
+    padding: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+  }
+  
+  .tab.hovered .tab-content,
+  .tab.active .tab-content {
+    display: block;
+  }
+  
+  .tab.hovered {
+    transform: scale(1.1);
+  }
+  
+  .tab.active {
+    /* background-color: #007bff; */
+    border: 2px solid black;
+    color: rgb(7, 7, 7);
+  }
+  
+  .prev, .next {
+
+    /* width: 90%; */
+    margin-left: 20px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: rgb(44, 157, 48);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+  }
+
+  .fixed-footer{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 50%;
+    justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  left: 25%;
+  }
+
+  .prev{
+    background-color:white;
+    border: 2px solid gray;
+    color: gray;
+  }
+
+  .prev:hover{
+    border-color: green;
+    color: green;
+  }
+
+  .next:hover{
+    background-color: rgb(15, 107, 15);
+  }
+
+  .fixed-footer button:disabled {
+    background-color: #d0cccc;
+    cursor: not-allowed;
+  }
+
+
+
+  .other:active{
+    border: 2px solid black;
+  }
+
+  .search-container {
+    position: relative;
+    width: 300px;
+    margin: 20px auto;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .suggestions {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #f1f1f1;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+  }
+  
+  .suggestions li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .suggestions li:hover {
+    background-color: #ddd;
+  }
+  
+  .selected-item {
+    display: inline-block;
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+  

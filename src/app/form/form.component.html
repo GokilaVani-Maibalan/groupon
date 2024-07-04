@@ -1,0 +1,339 @@
+<nav class="top-nav">
+  <div class="nav-title">GROUPON Merchant</div>
+  <div class="nav-buttons">
+    <button class="nav-button" (click)="onHelpClick()">
+      <i class="fa fa-question-circle"></i> Help
+    </button>
+    <button class="nav-button" (click)="onPreviewClick()">
+      <i class="fa fa-eye"></i> Preview
+    </button>
+    <button class="nav-button" (click)="onSaveExitClick()">
+      <i class="fa fa-save"></i> Save & Exit
+    </button>
+  </div>
+</nav>
+<div class="container">
+  <nav class="side-nav">
+    <ul>
+      <li (click)="selectSection('section1')">Options</li>
+      <li (click)="selectSection('section2')">Photos</li>
+      <li (click)="selectSection('section3')">Highlights</li>
+      <li (click)="selectSection('section4')">Description</li>
+      <li (click)="selectSection('section5')">Fine Print</li>
+      <li (click)="selectSection('section6')">Voucher instructions</li>
+      <li (click)="selectSection('section7')">Review</li>
+      <li (click)="selectSection('section8')">Submit</li>
+    </ul>
+  </nav>
+  <div class="main-content">
+    <ng-container *ngIf="selectedSection === 'section1'">
+      <h2>Customize your options</h2>
+      <p>
+        Review the options that customers will be able to buy from your campaign
+        page. We recommend offering multiple options to broaden your reach.
+      </p>
+      <div>
+        <div style="display: flex; justify-content: space-between">
+          <h4>Your options</h4>
+          <a href="">+ Add a new option</a>
+        </div>
+        <hr />
+        <div>
+          <div style="display: flex; justify-content: space-between">
+            <h4>Option1</h4>
+            <div><a>Remove</a> <a>Edit</a></div>
+          </div>
+          <h5>
+            Three Loads of Laundry with pick-up, wash, dry, fold, and delivery
+            (30lbs max)
+          </h5>
+          <ul style="list-style-type: none">
+            <li>Regular price:</li>
+            <li>Groupon price:</li>
+            <li>Monthly voucher cap:</li>
+          </ul>
+        </div>
+        <a>+ Add a new option</a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedSection === 'section2'">
+      <h2>Which photos would you like to use?</h2>
+      <label>
+        <input type="radio" value="Use my own photo(s)" />Use my own photo(s)
+      </label>
+      <label>
+        <input type="radio" value="Choose a stock photo" />Choose a stock photo
+      </label>
+      <p
+        style="
+          background-color: rgb(243, 240, 240);
+          padding: 10px;
+          border-radius: 10px;
+        "
+      >
+        <b>Recommendation:</b>Using your own photos helps customers imagine
+        their experience and gives you a chance to show off your business.
+      </p>
+      <hr />
+      <div>
+        <h4>Choose from our stock photo library</h4>
+        <p
+          style="
+            background-color: rgb(240, 214, 176);
+            padding: 10px;
+            border-radius: 10px;
+          "
+        >
+          No images to display
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px">
+        <a href="">Get more help</a>
+        <span>|</span>
+        <a href="">Preview this section</a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedSection === 'section3'">
+      <h2>What makes your campaign stand out?</h2>
+      <p>
+        Briefly describe the highlights of your business and campaign in 1–2
+        sentences.
+      </p>
+      <div>
+        <p>Highlights</p>
+        <textarea
+          placeholder="Skilled tailors craft a bespoke Italian cotton shirt in the locally owned, longstanding shop "
+          style="
+            border: 1px solid rgb(226, 222, 222);
+            width: 300px;
+            height: 100px;
+          "
+        >
+        </textarea>
+        <div class="highlight">
+          <span style="font-weight: bold">Example:</span>
+          <p>
+            Skilled tailors craft a bespoke Italian cotton shirt in the locally
+            owned, longstanding shop
+          </p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px">
+        <a href="">Get more help</a>
+        <span>|</span>
+        <a href="">Preview this section</a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedSection === 'section4'">
+      <h2>What's included in each option?</h2>
+      <p>
+        List out what's included in each of this campaign's options to give
+        customers a better understanding of what to expect.
+      </p>
+      <h5>Options</h5>
+      <ul style="list-style-type: square">
+        <li>
+          Three Loads of Laundry with pick-up, wash, dry, fold, and delivery
+          (30lbs max)
+        </li>
+        <li>
+          Five Loads of Laundry with pick-up, wash, dry, fold, and delivery (80
+          lbs max)
+        </li>
+        <li>
+          One Month subscription (weekly service) 3 loads with pick-up, wash,
+          dry, fold, and delivery (30 lbs max)
+        </li>
+        <li>
+          One Month subscription (weekly service) 5 loads with pick-up, wash,
+          dry, fold, and delivery (80 lbs max)
+        </li>
+      </ul>
+      <p>Description</p>
+      <textarea placeholder="Example:"></textarea>
+      <div class="highlight">
+        <span style="font-weight: bold">Example</span>
+        <ul style="list-style-type: square">
+          <li>
+            What's included: a bespoke button-down shirt in choice of 30 colors
+            and styles of Italian cotton
+          </li>
+          <li>Two 30-minute fitting appointments required.</li>
+        </ul>
+      </div>
+      <div style="display: flex; gap: 10px">
+        <a href="">Get more help</a>
+        <span>|</span>
+        <a href="">Preview this section</a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedSection === 'section5'">
+      <h2>Customize the fine print for this campaign.</h2>
+      <div>
+        <h4>Required fine print</h4>
+        <p>Review and update the following terms and limits.</p>
+      </div>
+      <div>
+        <h5>How many vouchers can each customer purchase?</h5>
+        <div>
+          <button class="count" (click)="increment()">+</button>
+          <span style="font-weight: 500">{{ count }}</span>
+          <button class="count" (click)="decrement()">-</button>
+        </div>
+        <div class="highlight">
+          <span style="font-weight: bold">Note:</span>
+          <p>
+            Groupon merchants are encouraged to let customers buy multiple
+            vouchers for themselves and others. When customers buy multiple
+            quantities, it improves the likelihood that they'll become repeat
+            customers.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h5>In how many days can customers repurchase vouchers?</h5>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <label>
+            <input type="radio" value="Every 30 days" />Every 30 days
+          </label>
+          <label>
+            <input type="radio" value="Every 60 days" />Every 60 days
+          </label>
+          <label>
+            <input type="radio" value="Every 90 days" />Every 90 days
+          </label>
+        </div>
+        <div class="highlight">
+          <span style="font-weight: bold">Note:</span>
+          <p>
+            At the end of this time frame, customers can buy additional
+            vouchers.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h5>
+          Within how many months do customers have to use their vouchers for the
+          promotional value?
+        </h5>
+        <div>
+          <button class="count" (click)="incrementvoucher()">+</button>
+          <span style="font-weight: 500">{{ vouchercount }}</span>
+          <button class="count" (click)="decrementvoucher()">-</button>
+        </div>
+        <div class="highlight">
+          <span style="font-weight: bold">Note:</span>
+          <p>
+            When a voucher expires, customers can still use the amount paid
+            towards your full-priced services.
+          </p>
+        </div>
+      </div>
+      <div>
+        <h5>Amount paid never expires</h5>
+        <div class="highlight">
+          <span style="font-weight: bold">Note:</span>
+          <p>
+            After a customer's Groupon expires, the amount the customer
+            originally paid is still valid.
+          </p>
+        </div>
+      </div>
+      <a href="">Preview this section</a>
+      <div>
+        <h4>Optional fine print</h4>
+        <p>
+          Add optional terms and limits to your campaign, but keep in mind that
+          doing so can prevent customers from buying vouchers and may have a
+          negative impact on you campaign’s performance.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <label>
+            <input
+              type="checkbox"
+              value="Limit Per Booking, table or household"
+            />Limit Per Booking, table or household
+          </label>
+          <label>
+            <input type="checkbox" value="Limit Per Visit." />Limit Per Visit.
+          </label>
+          <label>
+            <input type="checkbox" value="Subject to weather." />Subject to
+            weather.
+          </label>
+          <label>
+            <input type="checkbox" value="Not valid with offer." />Not valid
+            with offer.
+          </label>
+          <label>
+            <input type="checkbox" value="Not valid towards" />Not valid towards
+          </label>
+          <label>
+            <input type="checkbox" value="Excludes delivery." />Excludes
+            delivery.
+          </label>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedSection === 'section6'">
+      <h2>Let customers know how to redeem their vouchers.</h2>
+      <p>
+        Select one method of redemption and let customers know if they need to
+        make an appointment in advance. This information will be added to your
+        campaign.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <label>
+          <input
+            type="radio"
+            value="Customers will visit a physical location."
+          />Customers will visit a physical location.
+        </label>
+        <label>
+          <input type="radio" value="I will travel to my customers." />I will
+          travel to my customers.
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Customers will use their voucher online."
+          />Customers will use their voucher online.
+        </label>
+      </div>
+      <hr />
+      <h2>Describe your business</h2>
+      <p>Introduce customers to your business and tell your story.</p>
+      <div>
+        <p>Business description</p>
+        <textarea
+          placeholder="Skilled tailors craft a bespoke Italian cotton shirt in the locally owned, longstanding shop "
+          style="
+            border: 1px solid rgb(226, 222, 222);
+            width: 300px;
+            height: 100px;
+          "
+        >
+        </textarea>
+      </div>
+      <div class="highlight">
+        <span style="font-weight: bold">Example:</span>
+        <p>
+          With a menu of medical-grade aesthetic treatments, Advance Wellness
+          MedSpa aims to give clients noticeable results. Just as importantly,
+          though, it staffs skilled, dedicated professionals, including medical
+          director Rachel George, a board-certified physician with more than 20
+          years of experience.
+        </p>
+      </div>
+      <div style="display: flex; gap: 10px">
+        <a href="">Get more help</a>
+        <span>|</span>
+        <a href="">Preview this section</a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedSection === 'section7'"> </ng-container>
+  </div>
+</div>
