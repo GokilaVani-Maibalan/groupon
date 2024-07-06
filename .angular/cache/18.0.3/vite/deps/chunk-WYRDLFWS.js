@@ -8,7 +8,7 @@ import {
   isPlatformServer,
   parseCookieValue,
   setRootDomAdapter
-} from "./chunk-UGMLWF4K.js";
+} from "./chunk-P6QIGHUQ.js";
 import {
   APP_BOOTSTRAP_LISTENER,
   APP_ID,
@@ -82,7 +82,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-BEU2FVEQ.js";
+} from "./chunk-ICNGGUDX.js";
 import {
   __async,
   __objRest,
@@ -4070,7 +4070,6 @@ function provideClientHydration(...features) {
 var VERSION = new Version("18.0.3");
 
 export {
-  HttpClient,
   BrowserDomAdapter,
   BrowserGetTestability,
   EVENT_MANAGER_PLUGINS,
@@ -4124,4 +4123,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-LEQFUXJ4.js.map
+//# sourceMappingURL=chunk-WYRDLFWS.js.map

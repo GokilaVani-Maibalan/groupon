@@ -60,7 +60,8 @@
     <p>Select one</p>
     <div class="tabs">
       <div
-        *ngFor="let tab of tabs; let i = index"
+        *ngFor="let service of services; let i = index"
+        (click)="selectLevel1Item(service.level2_items)"
         class="tab"
         [ngClass]="{ active: selectedTab === i, hovered: hoveredTab === i }"
         (click)="selectTab(i)"
@@ -68,10 +69,10 @@
         (mouseout)="hoverTab(null)"
       >
         <div class="tab-header">
-          {{ tab.label }}
+          {{ service.name }}
         </div>
         <div class="tab-content" *ngIf="hoveredTab === i || selectedTab === i">
-          <p>{{ tab.content }}</p>
+          <p>{{ service.content }}</p>
         </div>
       </div>
     </div>
@@ -81,24 +82,27 @@
     <h3>Which type of services do you offer</h3>
     <p>Select all that apply</p>
     <div *ngIf="nextClicked && selectedTab !== null">
-      <!-- <p>{{ tabs[selectedTab].types }}</p> -->
-      <div *ngIf="selectedTabItems.length > 0">
+      <div>
         <div
-          *ngFor="let item of selectedTabItems; let i = index"
+          *ngFor="let level2Item of selectedLevel2Items; let i = index"
+          (click)="selectLevel2Item(level2Item.level3_items)"
           class="tab"
-          [ngClass]="{ active: selectedItem === i, hovered: hoveredTab === i }"
-          (click)="selectItem(i)"
+          [ngClass]="{
+            active: isTabSelected(level2Item),
+            hovered: hoveredTab === i
+          }"
+          (click)="selectItem(level2Item)"
           (mouseover)="hoverTab(i)"
           (mouseout)="hoverTab(null)"
         >
           <div class="tab-header">
-            {{ item.name }}
+            {{ level2Item.name }}
           </div>
           <div
             class="tab-content"
             *ngIf="hoveredTab === i || selectedTab === i"
           >
-            <p>{{ item.typecontent }}</p>
+            <p>{{ level2Item.content }}</p>
           </div>
         </div>
       </div>
@@ -139,22 +143,27 @@
         </li>
       </ul>
     </div>
-    <div id="selectedItems">
-      <div *ngFor="let selected of selectedItems" class="selected-item">
-        {{ selected }}
-      </div>
-    </div>
 
-    <div style="display: flex">
+    <div
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
       <h3>Types of services</h3>
       <a href="javascript:void(0)" (click)="handleAddServiceClick()"
         >+ Add another type of service</a
       >
     </div>
-    <div>
-      <h6>title</h6>
-      <div>item.name</div>
+    <div *ngFor="let level2Item of selectedTabItems; let i = index">
+      <h5>{{ level2Item.name }}</h5>
+      <span
+        class="tab"
+        *ngFor="let selected of selectedLevel3Items; let i = index"
+        [ngClass]="{ active: selectedType === i, hovered: hoveredTab === i }"
+        (click)="selectType(i)"
+      >
+        <span>{{ selected }}</span>
+      </span>
     </div>
+    <br />
     <a href="">Show more services</a>
     <br />
     <a href="">Can't find a type of service</a>

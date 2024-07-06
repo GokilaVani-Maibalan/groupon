@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { SupabaseService } from '../supabase.service';
 
 @Component({
   selector: 'app-campaign',
@@ -10,15 +11,31 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './campaign.component.html',
   styleUrl: './campaign.component.css',
 })
-export class CampaignComponent {
+export class CampaignComponent implements OnInit {
   currentPage: number = 0;
   totalPages: number = 5;
   selectedTab: number | null = null;
-  selectedItem: number | null = null;
   selectedTabItems: any[] = [];
   nextClicked: boolean = false;
   hoveredTab: number | null = null;
   selectedOther: boolean = false;
+  selectedType: number | null = null;
+
+  selectItem(service: any) {
+    if (!this.selectedTabItems.includes(service)) {
+      this.selectedTabItems.push(service);
+    } else {
+      this.deselectTab(service);
+    }
+  }
+
+  deselectTab(tab: any) {
+    this.selectedTabItems = this.selectedTabItems.filter((t) => t !== tab);
+  }
+
+  isTabSelected(tab: any): boolean {
+    return this.selectedTabItems.includes(tab);
+  }
 
   handleAddServiceClick() {
     this.changePage(2);
@@ -29,13 +46,14 @@ export class CampaignComponent {
   }
   selectTab(index: number): void {
     this.selectedTab = index;
-    this.selectedTabItems = this.tabs[index].types;
     this.selectedOther = false;
   }
-
-  selectItem(index: number): void {
-    this.selectedItem = index;
+  selectType(index: number): void {
+    this.selectedType = index;
   }
+  // selectItem(index: number): void {
+  //   this.selectedItem = index;
+  // }
   selectOtherTab(): void {
     this.selectedTab = null;
     this.selectedOther = true;
@@ -48,6 +66,9 @@ export class CampaignComponent {
     if (this.currentPage > 0) {
       this.currentPage--;
       this.nextClicked = false;
+    }
+    if (this.selectedTabItems.length != 0) {
+      this.selectedTabItems = [];
     }
   }
 
@@ -74,7 +95,7 @@ export class CampaignComponent {
   filteredSuggestions: string[] = [];
   selectedItems: string[] = [];
 
-  ngOnInit(): void {}
+  // ngOnInit(): void {}
 
   onInputChange(): void {
     this.filteredSuggestions = this.suggestions.filter((suggestion) =>
@@ -89,162 +110,27 @@ export class CampaignComponent {
     this.showSuggestions = false;
   }
 
-  tabs = [
-    {
-      label: 'Health, beauty & wellness',
-      content: 'Spas, Salons, Gyms, Doctors, Alternative medicine, etc.',
-      types: [
-        {
-          id: 1,
-          name: 'Med spa services',
-          typecontent:
-            'Laser hair removal, Microblading, Non-surgical facelifts, etc.',
-        },
-        {
-          id: 2,
-          name: 'Spa services',
-          typecontent: 'Body wraps, Saunas, Float tanks, Salt caves, etc.',
-        },
-        {
-          id: 3,
-          name: 'Massage services',
-          typecontent: 'Deep tissue, Hot stone, Reflexology, etc.',
-        },
-        {
-          id: 4,
-          name: 'Nail services',
-          typecontent: 'Mani-pedi, No-chip, Nail design, etc.',
-        },
-        {
-          id: 5,
-          name: 'Brow & lash services',
-          typecontent: 'Eyebrow shaping and tinting, Eyelash extensions, etc.',
-        },
-      ],
-    },
-    {
-      label: 'Things to do',
-      content: 'Events, Activities, Classes, etc.',
-      types: [
-        {
-          id: 1,
-          name: 'Skills & training workshops',
-          typecontent:
-            'Dance classes, Horseback riding, Trade skills, Resume writing, etc.',
-        },
-        {
-          id: 2,
-          name: 'Education',
-          typecontent:
-            'Academic courses, Certifications, Driver’s education, Firearm safety, etc.',
-        },
-        {
-          id: 3,
-          name: 'Events & festivals',
-          typecontent:
-            'Beer and wine festivals, Conventions, Food and drink exhibitions, etc.',
-        },
-        {
-          id: 4,
-          name: 'Indoor activities',
-          typecontent:
-            'Arcades, Bowling, Trampolines, Climbing walls, Room-escape games, etc.',
-        },
-        {
-          id: 5,
-          name: 'Sports activities',
-          typecontent:
-            'Golf, Paintball, Shooting ranges, Skydiving, Off-roading, etc.',
-        },
-      ],
-    },
-    {
-      label: 'Home & auto',
-      content: 'Automotive services, Home services, Pet care, etc.',
-      types: [
-        {
-          id: 1,
-          name: 'Car enhancements & repair',
-          typecontent: 'Brake pads, Window tinting, Remote starters, etc.',
-        },
-        {
-          id: 2,
-          name: 'Car maintenance',
-          typecontent:
-            'Oil changes, Wheel alignments, Inspections, Emissions testing, etc.',
-        },
-        {
-          id: 3,
-          name: 'Car wash',
-          typecontent: 'Exterior washes, Detailing, Wax and polish, etc.',
-        },
-        {
-          id: 4,
-          name: 'Entertainment rentals',
-          typecontent: 'DJ equipment, Catering, Photo booths, etc.',
-        },
-        {
-          id: 5,
-          name: 'Exterior home services',
-          typecontent:
-            'Landscaping, Window cleaning, Pressure washing, Pest control, Paving, etc.',
-        },
-      ],
-    },
-    {
-      label: 'Restaurants',
-      content: 'Dine-in, Takeout, Delivery, etc.',
-      types: [
-        {
-          id: 1,
-          name: 'American food',
-          typecontent:
-            'Pub grub, New American, Pizza, Burgers, Steakhouses, etc.',
-        },
-        {
-          id: 2,
-          name: 'International food',
-          typecontent: 'Italian, Mexican, Sushi, Indian, etc.',
-        },
-        {
-          id: 3,
-          name: 'Quick service',
-          typecontent: 'Cafes, Sandwich shops, Ice cream parlors, etc.',
-        },
-      ],
-    },
-    {
-      label: 'Retail',
-      content: 'Storefronts, Online shopping, Online services, etc.',
-      types: [
-        {
-          id: 1,
-          name: 'eLearning',
-          typecontent: 'Online courses and certifications, etc.',
-        },
-        {
-          id: 2,
-          name: 'Photography',
-          typecontent: 'Photoshoots, etc.',
-        },
-        {
-          id: 3,
-          name: 'Personal services',
-          typecontent:
-            'Meal prep delivery, Online consulting, Online tarot and psychic readings, etc.',
-        },
-        {
-          id: 4,
-          name: 'Online retail shopping',
-          typecontent: 'Shopping on a website, etc.',
-        },
-        {
-          id: 5,
-          name: 'Consulting Services',
-          typecontent:
-            'Financial/tax consultant, counselor/therapist, marketing consultant, etc.',
-        },
-      ],
-    },
-  ];
+  services: any[] = [];
+  selectedLevel2Items: any[] = [];
+  selectedLevel3Items: string[] = [];
+  constructor(private supabaseService: SupabaseService) {}
+
+  ngOnInit() {
+    this.loadItems();
+  }
+
+  async loadItems() {
+    this.services = (await this.supabaseService.getItems()) || [];
+  }
+
+  selectLevel1Item(level2Items: any[]) {
+    this.selectedLevel2Items = level2Items;
+    console.log(this.selectedLevel2Items);
+    this.selectedLevel3Items = [];
+  }
+
+  selectLevel2Item(level3Items: string[]) {
+    this.selectedLevel3Items = level3Items;
+    console.log(this.selectedLevel3Items);
+  }
 }

@@ -103,4 +103,10 @@ export class SupabaseService {
 
   //   return data;
   // }
+
+  async getItems() {
+    const { data, error } = await this.supabase.from('services').select('*');
+    if (error) console.error(error);
+    return data;
+  }
 }
