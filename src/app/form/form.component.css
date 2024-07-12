@@ -5,7 +5,7 @@
   }
   
   .side-nav {
-    width: 200px;
+    width: 250px;
     background-color: #f4f4f4;
     padding: 1rem;
     border-right: 1px solid #ddd;
@@ -31,8 +31,12 @@
   
   .main-content {
     flex-grow: 1;
+    max-width: 583px;
+    margin: 0 auto;
     padding: 1rem;
     overflow-y: auto; /* Adding scroll if content exceeds the container's height */
+    
+
   }
   
   h2 {
@@ -71,8 +75,9 @@
   justify-content: space-between;
   align-items: center;
   background-color: #46da46;
-  color: white;
-  padding: 10px 20px;
+  border-bottom: 2px solid rgb(211, 208, 208);
+  color: rgb(254, 252, 252);
+  padding: 1.3125rem 1.5rem;
   font-size: 1.2rem;
 }
 
@@ -88,7 +93,8 @@
 .nav-button {
   background: none;
   border: none;
-  color: white;
+  color: rgb(253, 252, 252);
+
   cursor: pointer;
   font-size: small;
   display: flex;
@@ -103,3 +109,149 @@
 .nav-button:hover {
   text-decoration: underline;
 }
+
+.prev, .next {
+
+  /* width: 90%; */
+  margin-left: 20px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: rgb(44, 157, 48);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.fixed-footer{
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 50%;
+  justify-content: space-between;
+align-items: center;
+padding: 0 20px;
+left: 25%;
+}
+
+.prev{
+  background-color:white;
+  border: 2px solid gray;
+  color: gray;
+}
+
+.prev:hover{
+  border-color: green;
+  color: green;
+}
+
+.next:hover{
+  background-color: rgb(15, 107, 15);
+}
+
+.fixed-footer button:disabled {
+  background-color: #d0cccc;
+  cursor: not-allowed;
+}
+
+a{
+  text-decoration: none;
+  color: #0076d6;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* 10% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px; /* Optional: Add rounded corners */
+  transition: all 0.3s ease-in-out;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Show the modal and overlay */
+.show {
+  display: block;
+}
+
+.modal-label{
+  padding-bottom: 15px;
+  display: block;
+}
+
+.modal-button{
+  margin-left: 20px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: rgb(44, 157, 48);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.side-nav .fa-chevron-down.collapsed {
+  transform: rotate(-90deg);
+}
+
+.side-nav ul ul li {
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.businessinfo{
+  margin-left: 20px;
+}
+
+.bank-input{
+  display: block;
+  border: 2px solid rgb(183, 180, 180);
+  width:80%;
+  height:50px;
+  margin: 5px;
+}
+
+/* .icon-completed {
+   
+   
+}
+
+.icon-not-completed {
+  color: white;
+  background: red;
+  width: 50px;
+  height:50px;
+  border-radius: 10px;
+} */

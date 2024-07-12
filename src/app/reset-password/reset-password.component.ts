@@ -29,7 +29,6 @@ export class ResetPasswordComponent {
     ]),
   });
 
-  token: string | null = null;
   message: string | null = null;
 
   constructor(
@@ -39,7 +38,7 @@ export class ResetPasswordComponent {
   ) {}
 
   async onSubmit(): Promise<void> {
-    if (this.resetPasswordForm.valid && this.token) {
+    if (this.resetPasswordForm.valid) {
       const password = this.resetPasswordForm.get('password')?.value as string;
       const confirmPassword = this.resetPasswordForm.get('confirmPassword')
         ?.value as string;
@@ -49,17 +48,33 @@ export class ResetPasswordComponent {
         return;
       }
 
-      const error = await this.supabaseService.updatePassword(password);
+      const { data, error } = await this.supabaseService.updatePassword(
+        password
+      );
+      console.log(data);
+      try {
+        const email = await this.supabaseService.getCurrentUserId();
+        console.log(email);
+        if (!email) {
+          console.error('Email not found.');
+          return;
+        }
 
-      if (error) {
-        alert('Error updating password');
-      } else {
-        alert(
-          'Password updated successfully. You can now log in with your new password.'
-        );
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 3000);
+        await this.supabaseService.updateMerchantPassword(email, password);
+
+        if (error) {
+          alert('Error updating password');
+        } else {
+          console.log(data);
+          alert(
+            'Password updated successfully. You can now log in with your new password.'
+          );
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 3000);
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   }

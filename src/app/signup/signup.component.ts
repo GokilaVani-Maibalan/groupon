@@ -21,7 +21,7 @@ export class SignupComponent {
   signupForm = new FormGroup({
     businessName: new FormControl('', Validators.required),
     taxId: new FormControl('', Validators.required),
-    // taxIdDoc: new FormControl('', Validators.required),
+    taxIdDoc: new FormControl('', Validators.required),
     businessAddress: new FormControl('', Validators.required),
     firstName: new FormControl('', Validators.required),
     password: new FormControl('', [
@@ -48,62 +48,67 @@ export class SignupComponent {
     private supabaseService: SupabaseService
   ) {}
 
-  // onFileSelected(event: any): void {
-  //   this.selectedFile = event.target.files[0];
-  // }
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    console.log(file);
+    if (file) {
+      this.selectedFile = file;
+      this.signupForm.patchValue({ taxIdDoc: file.name });
+    }
+  }
 
   async onSubmit(): Promise<void> {
     if (this.signupForm.valid) {
-      const email = this.signupForm.get('email')!.value as string;
-      const phoneNumber = this.signupForm.get('phoneNumber')!.value as string;
-      const firstName = this.signupForm.get('firstName')!.value as string;
-      const businessName = this.signupForm.get('businessName')!.value as string;
-      const businessAddress = this.signupForm.get('businessAddress')!
-        .value as string;
-      const taxId = this.signupForm.get('taxId')!.value as string;
-      // const taxIdDoc = this.signupForm.get('taxIdDoc')!.value as string;
-      const typeofBusiness = this.signupForm.get('typeofBusiness')!
-        .value as string;
-      const password = this.signupForm.get('password')!.value as string;
+      const formValues = this.signupForm.value;
 
       try {
-        const userExists = await this.supabaseService.checkUserExists(email);
+        const userExists = await this.supabaseService.checkUserExists(
+          formValues.email!
+        );
         if (userExists) {
           alert('Merchant already exists!');
         } else {
-          const user = this.supabaseService.signUp(email, password);
+          const user = this.supabaseService.signUp(
+            formValues.email!,
+            formValues.password!
+          );
           if (user !== null && user !== undefined) {
-            // if (this.selectedFile) {
-            //   const fileUrl = await this.supabaseService.uploadFile(
-            //     this.selectedFile
-            //   );
             //   if (fileUrl) {
             const merchantDetails = {
-              email: email,
-              phone_number: phoneNumber,
-              name: firstName,
-              business_name: businessName,
-              business_address: businessAddress,
-              tax_id: taxId,
-              // tax_id_doc: taxIdDoc,
-              typeof_business: typeofBusiness,
-              password: password,
+              email: formValues.email,
+              phone_number: formValues.phoneNumber,
+              name: formValues.firstName,
+              business_name: formValues.businessName,
+              business_address: formValues.businessAddress,
+              tax_id: formValues.taxId,
+              tax_id_doc: this.selectedFile ? this.selectedFile.name : '',
+              typeof_business: formValues.typeofBusiness,
+              password: formValues.password,
             };
             await this.supabaseService.storeUserData(
               merchantDetails,
               'merchants'
             );
+            if (this.selectedFile) {
+              const fileName = `${Date.now()}_${this.selectedFile.name}`;
+              const file = this.selectedFile;
+              const { data, error } = await this.supabaseService.uploadFile(
+                fileName,
+                file
+              );
+              console.log(data);
+              if (data) {
+                console.log('File uploaded:', data);
+              } else {
+                console.error('Error uploading file:', error);
+              }
+            }
             alert('Signup successful! Please wait for admin approval.');
             this.signupForm.reset();
-            this.router.navigate(['/get-started']);
-
-            console.log('value got');
+            this.router.navigate(['/campaign']);
+            this.selectedFile = null;
+            console.log(merchantDetails);
           }
-          // else {
-          //   alert('File upload failed!');
-          // }
-          //   }
-          // }
         }
       } catch (error) {
         console.error('Error during registration:', error);

@@ -1,42 +1,73 @@
 <div class="login-container auth">
   <div class="logo">
-      <img src="https://www1.grouponcdn.com/merchant/center/login/assets/merchant-logo-vertical-215f9c282a.svg"/>
+    <img
+      src="https://www1.grouponcdn.com/merchant/center/login/assets/merchant-logo-vertical-215f9c282a.svg"
+    />
   </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div>
-        <!-- <label for="email" >Email Address</label> -->
-        <input type="email" id="email" formControlName="email" placeholder="Email address" autofocus>
-        <div *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">
-          <span *ngIf="loginForm.controls.email.errors?.['required']">Email is required.</span>
-          <span *ngIf="loginForm.controls.email.errors?.['email']">Enter a valid email.</span>
-        </div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <!-- <label for="email" >Email Address</label> -->
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        placeholder="Email address"
+        autofocus
+      />
+      <div
+        *ngIf="
+          loginForm.controls.email.invalid && loginForm.controls.email.touched
+        "
+      >
+        <span *ngIf="loginForm.controls.email.errors?.['required']"
+          >Email is required.</span
+        >
+        <span *ngIf="loginForm.controls.email.errors?.['email']"
+          >Enter a valid email.</span
+        >
       </div>
-      <div>
-        <!-- <label for="password">Password</label> -->
-        <input type="password" id="password" formControlName="password" placeholder="Password" autofocus>
-        <span class="password-toggle is-hidden"></span>
-        <div *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched">
-          <span *ngIf="loginForm.controls.password.errors?.['required']">Password is required.</span>
-          <span *ngIf="loginForm.controls.password.errors?.['minlength']">Password must be at least 6 characters long.</span>
-       
-        </div>
+    </div>
+    <div>
+      <!-- <label for="password">Password</label> -->
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        placeholder="Password"
+        autofocus
+      />
+      <span class="password-toggle is-hidden"></span>
+      <div
+        *ngIf="
+          loginForm.controls.password.invalid &&
+          loginForm.controls.password.touched
+        "
+      >
+        <span *ngIf="loginForm.controls.password.errors?.['required']"
+          >Password is required.</span
+        >
+        <span *ngIf="loginForm.controls.password.errors?.['minlength']"
+          >Password must be at least 6 characters long.</span
+        >
       </div>
-      <div class="form-row">
-        <div class="checkbox-container">
-          <input type="checkbox" id="stayLoggedIn" name="stayLoggedIn">
-           Remember Me
+    </div>
+    <div class="form-row">
+      <div class="checkbox-container">
+        <input type="checkbox" id="stayLoggedIn" name="stayLoggedIn" />
+        Remember Me
       </div>
-        <a routerLink="/forgot-password">Forgot Password?</a>
-     </div>
-      <button type="submit" [disabled]="loginForm.invalid">Login</button>
-      <div class="help"><a href="/">Need help?</a><hr /></div>
-      
-    </form>
-      
-     <div class="auth-head">
-    Don't have a Merchant account? <a routerLink="/signup">Sign Up With Groupon</a>
+      <a routerLink="/forgot-password">Forgot Password?</a>
+    </div>
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    <div class="help">
+      <a href="/">Need help?</a>
+      <hr />
+    </div>
+  </form>
+
+  <div class="auth-head">
+    Don't have a Merchant account?
+    <a routerLink="/home">Sign Up With Groupon</a>
   </div>
-  </div>
-  
-  
+</div>
