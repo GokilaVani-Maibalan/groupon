@@ -176,4 +176,13 @@ export class SupabaseService {
     if (error) console.error(error);
     return data;
   }
+
+  async getTemplateOptions(option: string) {
+    const { data, error } = await this.supabase
+      .from('templates')
+      .select('*, options!inner(name)')
+      .eq('options.name', option);
+    if (error) console.error(error);
+    return data;
+  }
 }

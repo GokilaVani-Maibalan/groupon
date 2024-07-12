@@ -137,10 +137,12 @@
     <ng-container *ngIf="selectedSection === 'section2'">
       <h2>Which photos would you like to use?</h2>
       <label>
-        <input type="radio" value="Use my own photo(s)" />Use my own photo(s)
+        <input type="radio" name="values" value="Use my own photo(s)" />Use my
+        own photo(s)
       </label>
       <label>
-        <input type="radio" value="Choose a stock photo" />Choose a stock photo
+        <input type="radio" name="values" value="Choose a stock photo" />Choose
+        a stock photo
       </label>
       <p
         style="
@@ -274,13 +276,16 @@
         <h5>In how many days can customers repurchase vouchers?</h5>
         <div style="display: flex; flex-direction: column; gap: 10px">
           <label>
-            <input type="radio" value="Every 30 days" />Every 30 days
+            <input type="radio" name="values" value="Every 30 days" />Every 30
+            days
           </label>
           <label>
-            <input type="radio" value="Every 60 days" />Every 60 days
+            <input type="radio" name="values" value="Every 60 days" />Every 60
+            days
           </label>
           <label>
-            <input type="radio" value="Every 90 days" />Every 90 days
+            <input type="radio" name="values" value="Every 90 days" />Every 90
+            days
           </label>
         </div>
         <div class="highlight">
@@ -367,16 +372,21 @@
         <label>
           <input
             type="radio"
+            name="values"
             value="Customers will visit a physical location."
           />Customers will visit a physical location.
         </label>
         <label>
-          <input type="radio" value="I will travel to my customers." />I will
-          travel to my customers.
+          <input
+            type="radio"
+            name="values"
+            value="I will travel to my customers."
+          />I will travel to my customers.
         </label>
         <label>
           <input
             type="radio"
+            name="values"
             value="Customers will use their voucher online."
           />Customers will use their voucher online.
         </label>
@@ -453,8 +463,9 @@
         <div>
           <div>
             <label>
-              <input type="radio" value="option1" />I’m an independent
-              contractor, contracting to perform services for another company.
+              <input type="radio" name="values" value="option1" />I’m an
+              independent contractor, contracting to perform services for
+              another company.
             </label>
             <p style="color: rgb(190, 187, 187)">
               Example: I am renting a space (i.e. chair, room, etc.) and using
@@ -463,8 +474,8 @@
           </div>
           <div>
             <label>
-              <input type="radio" value="option2" />I’m a company with 2+
-              employees performing services.
+              <input type="radio" name="values" value="option2" />I’m a company
+              with 2+ employees performing services.
             </label>
             <p style="color: rgb(190, 187, 187)">
               Example: I am the owner of the contracting entity with more than
@@ -473,9 +484,9 @@
           </div>
           <div>
             <label>
-              <input type="radio" value="option3" />I’m a third party
-              representative involved in the sale of the goods or services being
-              sold.
+              <input type="radio" name="values" value="option3" />I’m a third
+              party representative involved in the sale of the goods or services
+              being sold.
             </label>
             <p style="color: rgb(190, 187, 187)">
               Example: I represent a marketing company and am setting up a
@@ -537,11 +548,12 @@
           style="display: flex; flex-direction: column; padding-bottom: 10px"
         >
           <label>
-            <input type="radio" value="option1" />Social Security Number
+            <input type="radio" name="values" value="option1" />Social Security
+            Number
           </label>
           <label>
-            <input type="radio" value="option1" />Employer Identification Number
-            (EIN)
+            <input type="radio" name="values" value="option1" />Employer
+            Identification Number (EIN)
           </label>
         </div>
         <div>

@@ -22,23 +22,32 @@
         >+ Add services</a
       > -->
     </div>
-    <hr />
 
-    <div *ngFor="let tab of selectedOptions">
+    <div *ngFor="let option of selectedOptions">
       <div
         style="
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding-bottom: 10px;
+
+          padding: 1.25rem 0;
+          border-bottom: 1px solid #e6e7e8;
+          border-top: 1px solid #e6e7e8;
         "
       >
         <label>
-          <input type="radio" value="{{ tab.name }} " /> {{ tab.name }}
+          <input
+            type="radio"
+            [value]="option"
+            [ngClass]="{ selected: templateOption === option }"
+            (click)="onOptionClick(option.name)"
+            name="availableService"
+          />
+          {{ option.name }}
         </label>
         <a>Remove </a>
       </div>
-      <hr />
     </div>
     <footer class="fixed-footer">
       <button (click)="next()">Build Campaign</button>
@@ -58,25 +67,31 @@
       <a href="javascript:void(0)" (click)="previous()">Change service</a>
     </div>
 
-    <div class="template_display">
+    <div
+      class="template_display"
+      *ngFor="let template_option of selectedTemplateOptions"
+    >
       <div class="template_image">
-        <img
-          src="https://img.grouponcdn.com/bynder/32kEKxmvmhiew7TC2cwWgFvpcTjy/32-5000x3000/v1/pt585x366"
-        />
+        <img src="{{ template_option.temp_image }}" />
       </div>
       <div class="badge">
-        <span>4 customizable options</span>
+        <span
+          >{{ template_option.temp_options.length }} customizable options</span
+        >
       </div>
 
-      <ul style="list-style-type: none">
-        <li><span>Option 1 : </span></li>
-        <li><span>Option 2 : </span></li>
-        <li><span>Option 3 : </span></li>
-        <li><span>Option 4 : </span></li>
+      <ul
+        style="list-style-type: none"
+        *ngFor="let option_type of template_option.temp_options"
+      >
+        <li>
+          <span>{{ option_type.option_number }} : </span
+          >{{ option_type.option_name }}
+        </li>
       </ul>
       <hr />
       <label class="temp_label">
-        <input type="radio" /> Use this template
+        <input type="radio" name="templateOptions" /> Use this template
       </label>
     </div>
     <footer class="fixed-footer">

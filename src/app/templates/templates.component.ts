@@ -20,10 +20,28 @@ export class TemplatesComponent {
 
   selectedOptions: any[] = [];
 
-  constructor(private router: Router) {}
+  templateOption: string | null = null;
+
+  constructor(
+    private router: Router,
+    private supabaseService: SupabaseService
+  ) {}
 
   ngOnInit(): void {
     this.selectedOptions = history.state.selectedOptions || [];
+  }
+
+  onOptionClick(option: string): void {
+    this.templateOption = option;
+    this.fetchData(option);
+  }
+
+  selectedTemplateOptions: any[] = [];
+
+  async fetchData(option: string) {
+    this.selectedTemplateOptions =
+      (await this.supabaseService.getTemplateOptions(option)) || [];
+    console.log(this.selectedTemplateOptions);
   }
 
   previous(): void {
