@@ -18,41 +18,12 @@
 <div class="container">
   <nav class="side-nav">
     <ul>
-      <li (click)="selectSection('section1')">
-        Options
-        <i *ngIf="isCompleted('section1')" class="icon-completed">&#9989;</i>
-
-        <i
-          *ngIf="!isCompleted('section1')"
-          class="fa fa-exclamation icon-not-completed"
-        ></i>
-      </li>
-      <li (click)="selectSection('section2')">
-        Photos
-        <i *ngIf="isCompleted('section2')" class="icon-completed">&#9989;</i>
-        <i *ngIf="!isCompleted('section2')" class="icon-not-completed"></i>
-      </li>
-      <li (click)="selectSection('section3')">
-        Highlights
-        <i *ngIf="isCompleted('section3')" class="icon-completed">&#9989;</i>
-
-        <i
-          *ngIf="!isCompleted('section3')"
-          class="fa fa-exclamation icon-not-completed"
-        ></i>
-      </li>
-      <li (click)="selectSection('section4')">
-        Description
-        <i *ngIf="isCompleted('section4')" class="icon-completed">&#9989;</i>
-      </li>
-      <li (click)="selectSection('section5')">
-        Fine Print
-        <i *ngIf="isCompleted('section5')" class="icon-completed">&#9989;</i>
-      </li>
-      <li (click)="selectSection('section6')">
-        Voucher instructions
-        <i *ngIf="isCompleted('section6')" class="icon-completed">&#9989;</i>
-      </li>
+      <li (click)="selectSection('section1')">Options</li>
+      <li (click)="selectSection('section2')">Photos</li>
+      <li (click)="selectSection('section3')">Highlights</li>
+      <li (click)="selectSection('section4')">Description</li>
+      <li (click)="selectSection('section5')">Fine Print</li>
+      <li (click)="selectSection('section6')">Voucher instructions</li>
       <li (click)="toggleBusinessInfo(); selectSection('section7')">
         <span> Business Info</span>
         <i class="fa fa-chevron-down" [class.collapsed]="!businessInfoOpen"></i>
@@ -60,29 +31,21 @@
       <ul *ngIf="businessInfoOpen">
         <li (click)="selectBusinessInfo('info1')" class="businessinfo">
           Business Description
-          <i *ngIf="isCompleted('info1')" class="icon-completed">&#9989;</i>
         </li>
         <li (click)="selectBusinessInfo('info2')" class="businessinfo">
           Business Website
-          <i *ngIf="isCompleted('info2')" class="icon-completed">&#9989;</i>
         </li>
         <li (click)="selectBusinessInfo('info3')" class="businessinfo">
           Business Type
-          <i *ngIf="isCompleted('info3')" class="icon-completed">&#9989;</i>
         </li>
         <li (click)="selectBusinessInfo('info4')" class="businessinfo">
           Payment Info
-          <i *ngIf="isCompleted('info4')" class="icon-completed">&#9989;</i>
         </li>
         <li (click)="selectBusinessInfo('info5')" class="businessinfo">
           Tax Info
-          <i *ngIf="isCompleted('info5')" class="icon-completed">&#9989;</i>
         </li>
       </ul>
-      <li (click)="selectSection('section8')">
-        Review
-        <i *ngIf="isCompleted('info1')" class="icon-completed">&#9989;</i>
-      </li>
+      <li (click)="selectSection('section8')">Review</li>
       <li (click)="selectSection('section9')">Submit</li>
     </ul>
   </nav>
@@ -94,14 +57,20 @@
         page. We recommend offering multiple options to broaden your reach.
       </p>
       <div>
-        <div style="display: flex; justify-content: space-between">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
           <h4>Your options</h4>
           <a href="#" (click)="openModal('type1'); $event.preventDefault()"
             >+ Add a new option</a
           >
         </div>
         <hr />
-        <div>
+        <div *ngFor="let form_option of selectedFormOption">
           <div
             style="
               display: flex;
@@ -109,7 +78,7 @@
               align-items: center;
             "
           >
-            <h4>Option1</h4>
+            <h4>{{ form_option.option_number }}</h4>
             <div>
               <a
                 style="padding-right: 5px"
@@ -120,8 +89,7 @@
             </div>
           </div>
           <h5>
-            Three Loads of Laundry with pick-up, wash, dry, fold, and delivery
-            (30lbs max)
+            {{ form_option.option_name }}
           </h5>
           <ul style="list-style-type: none">
             <li>Regular price:</li>
@@ -212,22 +180,12 @@
         customers a better understanding of what to expect.
       </p>
       <h5>Options</h5>
-      <ul style="list-style-type: square">
+      <ul
+        style="list-style-type: square"
+        *ngFor="let form_option of selectedFormOption"
+      >
         <li>
-          Three Loads of Laundry with pick-up, wash, dry, fold, and delivery
-          (30lbs max)
-        </li>
-        <li>
-          Five Loads of Laundry with pick-up, wash, dry, fold, and delivery (80
-          lbs max)
-        </li>
-        <li>
-          One Month subscription (weekly service) 3 loads with pick-up, wash,
-          dry, fold, and delivery (30 lbs max)
-        </li>
-        <li>
-          One Month subscription (weekly service) 5 loads with pick-up, wash,
-          dry, fold, and delivery (80 lbs max)
+          {{ form_option.option_name }}
         </li>
       </ul>
       <p>Description</p>
@@ -373,23 +331,120 @@
           <input
             type="radio"
             name="values"
-            value="Customers will visit a physical location."
+            value="option1"
+            (change)="onVoucherOptionSelect('option1')"
           />Customers will visit a physical location.
         </label>
         <label>
           <input
             type="radio"
             name="values"
-            value="I will travel to my customers."
+            value="option2"
+            (change)="onVoucherOptionSelect('option2')"
           />I will travel to my customers.
         </label>
         <label>
           <input
             type="radio"
             name="values"
-            value="Customers will use their voucher online."
+            value="option3"
+            (change)="onVoucherOptionSelect('option3')"
           />Customers will use their voucher online.
         </label>
+      </div>
+      <hr />
+
+      <!--Voucher Instructions-->
+
+      <div *ngIf="selectedVoucherOption === 'option1'">
+        <div>
+          <h3>Customers will visit a physical location</h3>
+          <p>
+            Customers will visit your business location(s) to receive the
+            service or product they purchased. (Example: salon, retail shop,
+            restaurant, etc.)
+          </p>
+        </div>
+        <div>
+          <h3>Do customers need to make an appointment?</h3>
+          <label>
+            <input type="radio" name="values" value="option1" />No appointment
+            needed
+          </label>
+          <label>
+            <input type="radio" name="values" value="option1" />Yes appointment
+            required
+          </label>
+        </div>
+        <form>
+          <div>
+            <label> Contact Method </label>
+            <input class="bank-input" style="color: rgb(218, 216, 216)" />
+          </div>
+          <div>
+            <label> Phone Number </label>
+            <input class="bank-input" style="color: rgb(218, 216, 216)" />
+          </div>
+        </form>
+      </div>
+
+      <!--Option2-->
+
+      <div *ngIf="selectedVoucherOption === 'option2'">
+        <div>
+          <h3>I will travel to my customers</h3>
+          <p>
+            You will go to the customer’s location to provide service. (Example:
+            window cleaning, home repair, car service, etc.)
+          </p>
+          <p>
+            Let customers know your service area by listing the primary area
+            where you provide service and/or the distance you will travel.
+          </p>
+        </div>
+        <p>Service Area</p>
+        <textarea
+          placeholder="Ex:Valid only within 10 miles of downtown Chicago (zipcode 60611) "
+          style="
+            border: 1px solid rgb(226, 222, 222);
+            width: 300px;
+            height: 100px;
+          "
+        ></textarea>
+        <form>
+          <div>
+            <label> Contact Method </label>
+            <input class="bank-input" style="color: rgb(218, 216, 216)" />
+          </div>
+          <div>
+            <label> Phone Number </label>
+            <input class="bank-input" style="color: rgb(218, 216, 216)" />
+          </div>
+        </form>
+      </div>
+
+      <!--Option3-->
+
+      <div *ngIf="selectedVoucherOption === 'option3'">
+        <div>
+          <h3>Customers will use their voucher online</h3>
+          <p>
+            Customers will go to your business website to use or access the
+            service they purchased. (Example: eLearning course, online
+            consulting, meal prep delivery, etc.)
+          </p>
+        </div>
+
+        <form>
+          <div>
+            <label> Contact Method </label>
+            <input class="bank-input" style="color: rgb(218, 216, 216)" />
+          </div>
+          <div>
+            <label> Phone Number </label>
+            <input class="bank-input" style="color: rgb(218, 216, 216)" />
+          </div>
+        </form>
       </div>
     </ng-container>
 

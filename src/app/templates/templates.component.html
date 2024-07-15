@@ -91,7 +91,12 @@
       </ul>
       <hr />
       <label class="temp_label">
-        <input type="radio" name="templateOptions" /> Use this template
+        <input
+          type="radio"
+          name="templateOptions"
+          (change)="onFormOptionSelect(template_option.temp_options)"
+        />
+        Use this template
       </label>
     </div>
     <footer class="fixed-footer">

@@ -105,14 +105,11 @@ export class CampaignComponent implements OnInit {
   filteredSuggestions: string[] = [];
   selectedItems: string[] = [];
 
-  // ngOnInit(): void {}
-
   continue(): void {
     const selectedOptions = this.selectedLevel3Items.filter(
       (tab, index) => this.selectedOption[index]
     );
     this.router.navigate(['/templates'], { state: { selectedOptions } });
-    console.log(selectedOptions);
   }
 
   onInputChange(): void {
@@ -149,25 +146,19 @@ export class CampaignComponent implements OnInit {
 
   async loadItems() {
     this.services = (await this.supabaseService.getItems()) || [];
-    console.log(this.services);
   }
 
   async level2_services(service_name: string) {
-    console.log(service_name);
     this.selectedLevel2Items =
       (await this.supabaseService.getLevel2Services(service_name)) || [];
-    console.log(this.selectedLevel2Items);
   }
 
   async options(level2_service_name: string) {
-    console.log(level2_service_name);
     this.selectedOptions =
       (await this.supabaseService.getOptions(level2_service_name)) || [];
     this.selectedOptions.forEach((item) => {
       this.selectedLevel3Items.push(item);
     });
-    console.log(this.selectedOptions);
-    console.log(this.selectedLevel3Items);
   }
 
   modalOpen = false;
