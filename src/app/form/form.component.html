@@ -18,39 +18,37 @@
 <div class="container">
   <nav class="side-nav">
     <ul>
-      <li (click)="selectSection('section1')">Options</li>
-      <li (click)="selectSection('section2')">Photos</li>
-      <li (click)="selectSection('section3')">Highlights</li>
-      <li (click)="selectSection('section4')">Description</li>
-      <li (click)="selectSection('section5')">Fine Print</li>
-      <li (click)="selectSection('section6')">Voucher instructions</li>
-      <li (click)="toggleBusinessInfo(); selectSection('section7')">
+      <li (click)="selectSection(1)">Options</li>
+      <li (click)="selectSection(2)">Photos</li>
+      <li (click)="selectSection(3)">Highlights</li>
+      <li (click)="selectSection(4)">Description</li>
+      <li (click)="selectSection(5)">Fine Print</li>
+      <li (click)="selectSection(6)">Voucher instructions</li>
+      <li (click)="toggleBusinessInfo(); selectSection(7)">
         <span> Business Info</span>
         <i class="fa fa-chevron-down" [class.collapsed]="!businessInfoOpen"></i>
       </li>
       <ul *ngIf="businessInfoOpen">
-        <li (click)="selectBusinessInfo('info1')" class="businessinfo">
+        <li (click)="selectBusinessInfo(1)" class="businessinfo">
           Business Description
         </li>
-        <li (click)="selectBusinessInfo('info2')" class="businessinfo">
+        <li (click)="selectBusinessInfo(2)" class="businessinfo">
           Business Website
         </li>
-        <li (click)="selectBusinessInfo('info3')" class="businessinfo">
+        <li (click)="selectBusinessInfo(3)" class="businessinfo">
           Business Type
         </li>
-        <li (click)="selectBusinessInfo('info4')" class="businessinfo">
+        <li (click)="selectBusinessInfo(4)" class="businessinfo">
           Payment Info
         </li>
-        <li (click)="selectBusinessInfo('info5')" class="businessinfo">
-          Tax Info
-        </li>
+        <li (click)="selectBusinessInfo(5)" class="businessinfo">Tax Info</li>
       </ul>
-      <li (click)="selectSection('section8')">Review</li>
-      <li (click)="selectSection('section9')">Submit</li>
+      <li (click)="selectSection(8)">Review</li>
+      <li (click)="selectSection(9)">Submit</li>
     </ul>
   </nav>
   <div class="main-content">
-    <ng-container *ngIf="selectedSection === 'section1'">
+    <ng-container *ngIf="selectedSection === 1">
       <h2>Customize your options</h2>
       <p>
         Review the options that customers will be able to buy from your campaign
@@ -65,12 +63,12 @@
           "
         >
           <h4>Your options</h4>
-          <a href="#" (click)="openModal('type1'); $event.preventDefault()"
+          <a href="#" (click)="openModal('type1', 0); $event.preventDefault()"
             >+ Add a new option</a
           >
         </div>
         <hr />
-        <div *ngFor="let form_option of selectedFormOption">
+        <div *ngFor="let form_option of selectedFormOption; let i = index">
           <div
             style="
               display: flex;
@@ -78,11 +76,11 @@
               align-items: center;
             "
           >
-            <h4>{{ form_option.option_number }}</h4>
+            <h4>Option {{ i + 1 }}</h4>
             <div>
               <a
                 style="padding-right: 5px"
-                (click)="openModal('type2'); $event.preventDefault()"
+                (click)="openModal('type2', i); $event.preventDefault()"
                 >Remove</a
               ><span>|</span>
               <a style="padding-left: 5px">Edit</a>
@@ -97,12 +95,15 @@
             <li>Monthly voucher cap:</li>
           </ul>
         </div>
-        <a (click)="openModal('type1'); $event.preventDefault()"
+        <a (click)="openModal('type1', 0); $event.preventDefault()"
           >+ Add a new option</a
         >
       </div>
+      <footer class="fixed-footer">
+        <button class="next" (click)="onNextClick()">Next</button>
+      </footer>
     </ng-container>
-    <ng-container *ngIf="selectedSection === 'section2'">
+    <ng-container *ngIf="selectedSection === 2">
       <h2>Which photos would you like to use?</h2>
       <label>
         <input type="radio" name="values" value="Use my own photo(s)" />Use my
@@ -125,6 +126,7 @@
       <hr />
       <div>
         <h4>Choose from our stock photo library</h4>
+
         <p
           style="
             background-color: rgb(240, 214, 176);
@@ -141,8 +143,12 @@
         <span>|</span>
         <a href="">Preview this section</a>
       </div>
+      <footer class="fixed-footer">
+        <button class="prev" (click)="onPrevClick()">Previous</button>
+        <button class="next" (click)="onNextClick()">Next</button>
+      </footer>
     </ng-container>
-    <ng-container *ngIf="selectedSection === 'section3'">
+    <ng-container *ngIf="selectedSection === 3">
       <h2>What makes your campaign stand out?</h2>
       <p>
         Briefly describe the highlights of your business and campaign in 1–2
@@ -157,6 +163,8 @@
             width: 300px;
             height: 100px;
           "
+          #highlights
+          (input)="storeInput('highlights', highlights.value)"
         >
         </textarea>
         <div class="highlight">
@@ -172,8 +180,12 @@
         <span>|</span>
         <a href="">Preview this section</a>
       </div>
+      <footer class="fixed-footer">
+        <button class="prev" (click)="onPrevClick()">Previous</button>
+        <button class="next" (click)="onNextClick()">Next</button>
+      </footer>
     </ng-container>
-    <ng-container *ngIf="selectedSection === 'section4'">
+    <ng-container *ngIf="selectedSection === 4">
       <h2>What's included in each option?</h2>
       <p>
         List out what's included in each of this campaign's options to give
@@ -189,7 +201,11 @@
         </li>
       </ul>
       <p>Description</p>
-      <textarea placeholder="Example:"></textarea>
+      <textarea
+        placeholder="Example:"
+        #description
+        (input)="storeInput('description', description.value)"
+      ></textarea>
       <div class="highlight">
         <span style="font-weight: bold">Example</span>
         <ul style="list-style-type: square">
@@ -205,8 +221,12 @@
         <span>|</span>
         <a href="">Preview this section</a>
       </div>
+      <footer class="fixed-footer">
+        <button class="prev" (click)="onPrevClick()">Previous</button>
+        <button class="next" (click)="onNextClick()">Next</button>
+      </footer>
     </ng-container>
-    <ng-container *ngIf="selectedSection === 'section5'">
+    <ng-container *ngIf="selectedSection === 5">
       <h2>Customize the fine print for this campaign.</h2>
       <div>
         <h4>Required fine print</h4>
@@ -234,16 +254,25 @@
         <h5>In how many days can customers repurchase vouchers?</h5>
         <div style="display: flex; flex-direction: column; gap: 10px">
           <label>
-            <input type="radio" name="values" value="Every 30 days" />Every 30
-            days
+            <input
+              type="radio"
+              name="values"
+              (change)="storeInput('repurchase', 'Every 30 days')"
+            />Every 30 days
           </label>
           <label>
-            <input type="radio" name="values" value="Every 60 days" />Every 60
-            days
+            <input
+              type="radio"
+              name="values"
+              (change)="storeInput('repurchase', 'Every 60 days')"
+            />Every 60 days
           </label>
           <label>
-            <input type="radio" name="values" value="Every 90 days" />Every 90
-            days
+            <input
+              type="radio"
+              name="values"
+              (change)="storeInput('repurchase', 'Every 90 days')"
+            />Every 90 days
           </label>
         </div>
         <div class="highlight">
@@ -292,34 +321,214 @@
           negative impact on you campaign’s performance.
         </p>
         <div style="display: flex; flex-direction: column; gap: 10px">
-          <label>
-            <input
-              type="checkbox"
-              value="Limit Per Booking, table or household"
-            />Limit Per Booking, table or household
-          </label>
-          <label>
-            <input type="checkbox" value="Limit Per Visit." />Limit Per Visit.
-          </label>
-          <label>
-            <input type="checkbox" value="Subject to weather." />Subject to
-            weather.
-          </label>
-          <label>
-            <input type="checkbox" value="Not valid with offer." />Not valid
-            with offer.
-          </label>
-          <label>
-            <input type="checkbox" value="Not valid towards" />Not valid towards
-          </label>
-          <label>
-            <input type="checkbox" value="Excludes delivery." />Excludes
-            delivery.
-          </label>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                (change)="toggleCheckbox('Limit Per Booking'); toggleOptions(0)"
+              />Limit Per Booking, table or household
+            </label>
+            <br />
+            <div
+              *ngIf="showOptions[0]"
+              style="display: flex; flex-direction: column"
+            >
+              <div>
+                <button class="count" (click)="decrementBookingOption()">
+                  -
+                </button>
+                <span style="font-weight: 500">{{ bookingcount }}</span>
+                <button class="count" (click)="incrementBookingOption()">
+                  +
+                </button>
+              </div>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="option"
+                  (click)="onOptionClick('Option 1')"
+                />
+                table</label
+              >
+
+              <label
+                ><input
+                  type="radio"
+                  name="option"
+                  (click)="onOptionClick('Option 2')"
+                />
+                household</label
+              >
+
+              <label>
+                <input
+                  type="radio"
+                  name="option"
+                  (click)="onOptionClick('Option 3')"
+                />
+                booking
+              </label>
+              <br />
+              <p
+                style="
+                  background-color: rgb(243, 240, 240);
+                  padding: 10px;
+                  border-radius: 10px;
+                "
+              >
+                <b>Note:</b> This tells customers how many vouchers they can use
+                during their booking or by their table or household.
+              </p>
+            </div>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                (change)="toggleCheckbox('Limit Per Visit.'); toggleOptions(1)"
+              />Limit Per Visit.
+            </label>
+            <br />
+            <div *ngIf="showOptions[1]">
+              <button class="count" (click)="decrementLimit()">-</button>
+              <span style="font-weight: 500">{{ limitcount }}</span>
+              <button class="count" (click)="incrementLimit()">+</button>
+              <br />
+              <p
+                style="
+                  background-color: rgb(243, 240, 240);
+                  padding: 10px;
+                  border-radius: 10px;
+                "
+              >
+                <b>Note:</b> Limits customers to 1 Groupon deal per visit.
+              </p>
+            </div>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                (change)="
+                  toggleCheckbox('Subject to weather.'); toggleOptions(2)
+                "
+              />Subject to weather.
+            </label>
+            <div *ngIf="showOptions[2]">
+              <p
+                style="
+                  background-color: rgb(243, 240, 240);
+                  padding: 10px;
+                  border-radius: 10px;
+                "
+              >
+                <b>Note:</b> Services may not be available to customers during
+                certain weather conditions.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                (change)="
+                  toggleCheckbox('Not valid with offer.'); toggleOptions(3)
+                "
+              />Not valid with offer.
+            </label>
+            <div *ngIf="showOptions[3]">
+              <p
+                style="
+                  background-color: rgb(243, 240, 240);
+                  padding: 10px;
+                  border-radius: 10px;
+                "
+              >
+                <b>Note:</b> Groupon cannot be combined with other promotions.
+              </p>
+            </div>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                (change)="toggleCheckbox('Not valid towards'); toggleOptions(4)"
+              />Not valid towards
+            </label>
+            <br />
+            <div
+              *ngIf="showOptions[4]"
+              style="display: flex; flex-direction: column"
+            >
+              <label>
+                <input
+                  type="radio"
+                  name="validoption"
+                  (click)="onValidOptionClick('Option 1')"
+                />
+
+                taxes
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="validoption"
+                  (click)="onValidOptionClick('Option 2')"
+                />
+                gratuity
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="validoption"
+                  (click)="onValidOptionClick('Option 3')"
+                />
+                taxes or gratuity
+              </label>
+              <br />
+              <p
+                style="
+                  background-color: rgb(243, 240, 240);
+                  padding: 10px;
+                  border-radius: 10px;
+                "
+              >
+                <b>Note:</b> States that the voucher price does not include
+                taxes, tip or both.
+              </p>
+            </div>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                (change)="
+                  toggleCheckbox('Excludes delivery.'); toggleOptions(5)
+                "
+              />Excludes delivery.
+            </label>
+            <div *ngIf="showOptions[5]">
+              <p
+                style="
+                  background-color: rgb(243, 240, 240);
+                  padding: 10px;
+                  border-radius: 10px;
+                "
+              >
+                <b>Note:</b> Excludes delivery.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+      <footer class="fixed-footer">
+        <button class="prev" (click)="onPrevClick()">Previous</button>
+        <button class="next" (click)="onNextClick()">Next</button>
+      </footer>
     </ng-container>
-    <ng-container *ngIf="selectedSection === 'section6'">
+    <ng-container *ngIf="selectedSection === 6">
       <h2>Let customers know how to redeem their vouchers.</h2>
       <p>
         Select one method of redemption and let customers know if they need to
@@ -332,7 +541,10 @@
             type="radio"
             name="values"
             value="option1"
-            (change)="onVoucherOptionSelect('option1')"
+            (change)="
+              onVoucherOptionSelect('option1');
+              storeInput('voucher', 'Customers will visit a physical location.')
+            "
           />Customers will visit a physical location.
         </label>
         <label>
@@ -340,7 +552,10 @@
             type="radio"
             name="values"
             value="option2"
-            (change)="onVoucherOptionSelect('option2')"
+            (change)="
+              onVoucherOptionSelect('option2');
+              storeInput('voucher', 'I  will travel to my customers.')
+            "
           />I will travel to my customers.
         </label>
         <label>
@@ -348,7 +563,10 @@
             type="radio"
             name="values"
             value="option3"
-            (change)="onVoucherOptionSelect('option3')"
+            (change)="
+              onVoucherOptionSelect('option3');
+              storeInput('voucher', 'Customers will use their voucher online.')
+            "
           />Customers will use their voucher online.
         </label>
       </div>
@@ -446,10 +664,14 @@
           </div>
         </form>
       </div>
+      <footer class="fixed-footer">
+        <button class="prev" (click)="onPrevClick()">Previous</button>
+        <button class="next" (click)="onNextClick()">Next</button>
+      </footer>
     </ng-container>
 
-    <ng-container *ngIf="selectedSection === 'section7' && businessInfoSection">
-      <ng-container *ngIf="businessInfoSection === 'info1'">
+    <ng-container *ngIf="selectedSection === 7 && businessInfoSection">
+      <ng-container *ngIf="businessInfoSection === 1">
         <h2>Describe your business</h2>
         <p>Introduce customers to your business and tell your story.</p>
         <div>
@@ -461,6 +683,8 @@
               width: 300px;
               height: 100px;
             "
+            #businessdesc
+            (input)="storeInput('businessdesc', businessdesc.value)"
           >
           </textarea>
         </div>
@@ -479,8 +703,12 @@
           <span>|</span>
           <a href="">Preview this section</a>
         </div>
+        <footer class="fixed-footer">
+          <button class="prev" (click)="onPrevInfoClick()">Previous</button>
+          <button class="next" (click)="onNextInfoClick()">Next</button>
+        </footer>
       </ng-container>
-      <ng-container *ngIf="businessInfoSection === 'info2'">
+      <ng-container *ngIf="businessInfoSection === 2">
         <h2>What’s your business website?</h2>
         <div class="highlight">
           <span style="font-weight: bold">Required:</span>
@@ -497,6 +725,8 @@
             placeholder=" https://www.abc.com/locations
              "
             style="border: 1px solid rgb(192, 189, 189)"
+            #website
+            (input)="storeInput('website', website.value)"
           />
         </div>
         <div>
@@ -510,16 +740,21 @@
             <li>Links to social media pages must be your business pages.</li>
           </ul>
         </div>
+        <footer class="fixed-footer">
+          <button class="prev" (click)="onPrevInfoClick()">Previous</button>
+          <button class="next" (click)="onNextInfoClick()">Next</button>
+        </footer>
       </ng-container>
-      <ng-container *ngIf="businessInfoSection === 'info3'">
+      <ng-container *ngIf="businessInfoSection === 3">
         <h2>What type of business are you?</h2>
 
         <p>Choose the description that best matches your business.</p>
         <div>
           <div>
             <label>
-              <input type="radio" name="values" value="option1" />I’m an
-              independent contractor, contracting to perform services for
+              <input type="radio" name="values" value="option1" />
+
+              I’m an independent contractor, contracting to perform services for
               another company.
             </label>
             <p style="color: rgb(190, 187, 187)">
@@ -539,9 +774,9 @@
           </div>
           <div>
             <label>
-              <input type="radio" name="values" value="option3" />I’m a third
-              party representative involved in the sale of the goods or services
-              being sold.
+              <input type="radio" name="values" value="option3" />I’m a company
+              />I’m a third party representative involved in the sale of the
+              goods or services being sold.
             </label>
             <p style="color: rgb(190, 187, 187)">
               Example: I represent a marketing company and am setting up a
@@ -549,8 +784,12 @@
             </p>
           </div>
         </div>
+        <footer class="fixed-footer">
+          <button class="prev" (click)="onPrevInfoClick()">Previous</button>
+          <button class="next" (click)="onNextInfoClick()">Next</button>
+        </footer>
       </ng-container>
-      <ng-container *ngIf="businessInfoSection === 'info4'">
+      <ng-container *ngIf="businessInfoSection === 4">
         <h2>Add your payment information.</h2>
         <p>
           Provide information for the account where you want to receive payments
@@ -592,8 +831,12 @@
             <li>Bank website or mobile app</li>
           </ul>
         </div>
+        <footer class="fixed-footer">
+          <button class="prev" (click)="onPrevInfoClick()">Previous</button>
+          <button class="next" (click)="onNextInfoClick()">Next</button>
+        </footer>
       </ng-container>
-      <ng-container *ngIf="businessInfoSection === 'info5'">
+      <ng-container *ngIf="businessInfoSection === 5">
         <h2>Add your tax information.</h2>
         <p>
           Select a method to verify your tax information. We use this
@@ -640,10 +883,14 @@
             <li>Bank statements</li>
           </ul>
         </div>
+        <footer class="fixed-footer">
+          <button class="prev" (click)="onPrevInfoClick()">Previous</button>
+          <button class="next" (click)="onNextInfoClick()">Next</button>
+        </footer>
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="selectedSection === 'section8'">
+    <ng-container *ngIf="selectedSection === 8">
       <h2>Review your campaign.</h2>
       <p>
         Here’s how your campaign will look with the content you’ve added so far.
@@ -665,25 +912,48 @@
           Your campaign will launch within 1-2 business days of submission,
           pending approval. Prefer a later date? Select
         </p>
-        <p>Launch date: Jul 12, 2024</p>
+        <p>Launch date: {{ futureDate }}</p>
       </div>
       <hr style="color: rgb(191, 187, 187)" />
+
       <h5>Options</h5>
+      <div *ngFor="let option of selectedFormOption; let i = index">
+        <h5>Option{{ i + 1 }}</h5>
+        <p>{{ option.option_name }}</p>
+      </div>
       <hr style="color: rgb(191, 187, 187)" />
       <h5>Photos</h5>
       <hr style="color: rgb(191, 187, 187)" />
       <h5>Highlights</h5>
+      <p>{{ storedInputs["highlights"] }}</p>
       <hr style="color: rgb(191, 187, 187)" />
       <h5>About this Deal</h5>
+      <p>{{ storedInputs["description"] }}</p>
+
       <hr style="color: rgb(191, 187, 187)" />
       <h5>Fine Print</h5>
+      <ul>
+        <li *ngFor="let checkbox of storedInputs['selectedCheckboxes']">
+          {{ checkbox }}
+        </li>
+      </ul>
       <hr style="color: rgb(191, 187, 187)" />
       <h5>Voucher Instructions</h5>
+      <p>{{ storedInputs["voucher"] }}</p>
+
       <hr style="color: rgb(191, 187, 187)" />
       <h5>About</h5>
+      <p>{{ storedInputs["businessdesc"] }}</p>
+
       <hr style="color: rgb(191, 187, 187)" />
       <h5>Business Website</h5>
+      <p>{{ storedInputs["website"] }}</p>
+
       <hr style="color: rgb(191, 187, 187)" />
+      <footer class="fixed-footer">
+        <button class="prev" (click)="onPrevClick()">Previous</button>
+        <button class="next" (click)="onNextClick()">Next</button>
+      </footer>
     </ng-container>
   </div>
 
@@ -727,7 +997,9 @@
       <div *ngSwitchCase="'type2'">
         <h2>Remove Option ?</h2>
         <p>If you remove this option, your work will be permanently deleted.</p>
-        <button class="modal-button" (click)="closeModal()">Yes, remove</button>
+        <button class="modal-button" (click)="removeModal()">
+          Yes, remove
+        </button>
         <button class="modal-button" (click)="closeModal()">Cancel</button>
       </div>
     </ng-container>

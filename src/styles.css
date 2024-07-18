@@ -20,6 +20,14 @@ html,body{
     display: flex;
 }
 
+body, .main-content {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+body::-webkit-scrollbar, .main-content::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
 
 
 /* Max width 767px */

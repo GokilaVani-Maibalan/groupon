@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { FormComponent } from './form/form.component';
 import { TemplatesComponent } from './templates/templates.component';
+import { DashboardComponent } from './main-page/dashboard/dashboard.component';
+import { EditCampaignComponent } from './editor/edit-campaign/edit-campaign.component';
 
 const routes: Routes = [
   // { path: 'signup', component: SignupComponent },
@@ -27,6 +29,8 @@ const routes: Routes = [
   { path: 'campaign', component: CampaignComponent },
   { path: 'forms', component: FormComponent },
   { path: 'templates', component: TemplatesComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'editor', component: EditCampaignComponent },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
 ];

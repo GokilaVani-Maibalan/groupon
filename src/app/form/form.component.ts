@@ -11,17 +11,70 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './form.component.css',
 })
 export class FormComponent {
-  selectedSection: string = 'section1';
+  selectedSection: number = 1;
   businessInfoOpen: boolean = false;
-  businessInfoSection: string | null = null;
+  businessInfoSection: number = 1;
   count: number = 0;
   vouchercount: number = 0;
+  bookingcount: number = 0;
+  limitcount: number = 0;
   selectedFormOption: any[] = [];
   isModalOpen = false;
-
+  showOptions = [false, false, false, false, false];
   modalContentType: string | null = null;
-
+  modalContentIndex: number = 0;
   selectedVoucherOption: string | null = null;
+  futureDate: string = '';
+
+  calculateFutureDate() {
+    const today = new Date();
+    const future = new Date(today);
+    future.setDate(today.getDate() + 2);
+
+    this.futureDate = this.formatDate(future);
+  }
+
+  formatDate(date: Date): string {
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+  }
+
+  toggleOptions(index: number) {
+    this.showOptions[index] = !this.showOptions[index];
+  }
+  onOptionClick(option: string) {
+    console.log(option);
+  }
+  onValidOptionClick(option: string) {
+    console.log(option);
+  }
+  onNextClick() {
+    this.selectedSection++;
+  }
+
+  onPrevClick() {
+    if (this.selectedSection > 1) {
+      this.selectedSection--;
+    }
+  }
+
+  onPrevInfoClick() {
+    if (this.businessInfoSection === 1) {
+      this.selectedSection--;
+    } else {
+      this.businessInfoSection--;
+    }
+  }
+  onNextInfoClick() {
+    if (this.businessInfoSection === 5) {
+      this.selectedSection++;
+    } else {
+      this.businessInfoSection++;
+    }
+  }
 
   onVoucherOptionSelect(option: string): void {
     console.log(option);
@@ -32,6 +85,7 @@ export class FormComponent {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.calculateFutureDate();
     this.route.paramMap.subscribe((params) => {
       const optionString = params.get('selectedFormOption');
       if (optionString) {
@@ -41,13 +95,21 @@ export class FormComponent {
     });
   }
 
-  openModal(type: string): void {
+  openModal(type: string, index: number): void {
     this.modalContentType = type;
+    this.modalContentIndex = index;
     this.isModalOpen = true;
   }
 
   closeModal(): void {
     this.isModalOpen = false;
+    this.modalContentType = null;
+  }
+
+  removeModal(): void {
+    this.selectedFormOption.splice(this.modalContentIndex, 1);
+    this.isModalOpen = false;
+    alert('Option removed');
     this.modalContentType = null;
   }
 
@@ -73,6 +135,25 @@ export class FormComponent {
     }
   }
 
+  incrementLimit() {
+    this.limitcount++;
+  }
+
+  decrementLimit() {
+    if (this.limitcount > 0) {
+      this.limitcount--;
+    }
+  }
+
+  decrementBookingOption() {
+    if (this.bookingcount > 0) {
+      this.bookingcount--;
+    }
+  }
+  incrementBookingOption() {
+    this.bookingcount++;
+  }
+
   incrementvoucher() {
     this.vouchercount++;
   }
@@ -83,39 +164,32 @@ export class FormComponent {
     }
   }
 
-  selectSection(section: string): void {
+  selectSection(section: number): void {
     this.selectedSection = section;
-    // this.businessInfoOpen = false;
-    // this.completedSections[section] = true;
   }
 
   toggleBusinessInfo() {
     this.businessInfoOpen = !this.businessInfoOpen;
   }
 
-  selectBusinessInfo(info: string) {
+  selectBusinessInfo(info: number) {
     this.businessInfoSection = info;
-    // this.completedSections[info] = true;
   }
 
-  // completedSections: { [key: string]: boolean } = {
-  //   section1: false,
-  //   section2: false,
-  //   section3: false,
-  //   section4: false,
-  //   section5: false,
-  //   section6: false,
-  //   section7: false,
-  //   info1: false,
-  //   info2: false,
-  //   info3: false,
-  //   info4: false,
-  //   info5: false,
-  //   section8: false,
-  //   section9: false,
-  // };
+  storedInputs: { [key: string]: any } = { selectedCheckboxes: [] };
 
-  // isCompleted(section: string): boolean {
-  //   return this.completedSections[section];
-  // }
+  storeInput(key: string, value: string) {
+    this.storedInputs[key] = value;
+    console.log(this.storedInputs);
+  }
+
+  toggleCheckbox(option: string) {
+    if (this.storedInputs['selectedCheckboxes'].includes(option)) {
+      this.storedInputs['selectedCheckboxes'] = this.storedInputs[
+        'selectedCheckboxes'
+      ].filter((item: any) => item !== option);
+    } else {
+      this.storedInputs['selectedCheckboxes'].push(option);
+    }
+  }
 }
