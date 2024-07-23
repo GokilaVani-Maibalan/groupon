@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EditOptionComponent {
   field: string = '';
   data: any;
+  itemId: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -25,6 +26,7 @@ export class EditOptionComponent {
   ngOnInit(): void {
     this.field = this.route.snapshot.paramMap.get('field')!;
     this.data = history.state.data;
+    this.itemId = history.state.itemId;
     console.log(this.data);
     if (!this.data) {
       console.error('No data found in history state.');
@@ -37,7 +39,7 @@ export class EditOptionComponent {
   }
 
   onDoneClick() {
-    this.router.navigate(['/editor'], {
+    this.router.navigate(['/editor', this.itemId], {
       state: { field: this.field, updatedData: this.data },
     });
   }
