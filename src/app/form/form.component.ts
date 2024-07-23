@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { SupabaseService } from '../supabase.service';
 
 @Component({
   selector: 'app-form',
@@ -25,7 +26,7 @@ export class FormComponent {
   modalContentIndex: number = 0;
   selectedVoucherOption: string | null = null;
   futureDate: string = '';
-
+  selectedPhotoOption: string | null = null;
   calculateFutureDate() {
     const today = new Date();
     const future = new Date(today);
@@ -52,7 +53,16 @@ export class FormComponent {
     console.log(option);
   }
   onNextClick() {
-    this.selectedSection++;
+    if (this.selectedSection === 8) {
+      this.saveToDatabase();
+      this.selectedSection++;
+    }
+    if (this.selectedSection === 1) {
+      this.storeInput('options', this.selectedFormOption);
+      this.selectedSection++;
+    } else {
+      this.selectedSection++;
+    }
   }
 
   onPrevClick() {
@@ -82,7 +92,10 @@ export class FormComponent {
     console.log(this.selectedVoucherOption);
   }
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private supabaseService: SupabaseService
+  ) {}
 
   ngOnInit(): void {
     this.calculateFutureDate();
@@ -113,6 +126,10 @@ export class FormComponent {
     this.modalContentType = null;
   }
 
+  onPhotoSelect(option: string): void {
+    this.selectedPhotoOption = option;
+    console.log(this.selectedPhotoOption);
+  }
   onHelpClick() {
     alert('Help clicked');
   }
@@ -178,7 +195,7 @@ export class FormComponent {
 
   storedInputs: { [key: string]: any } = { selectedCheckboxes: [] };
 
-  storeInput(key: string, value: string) {
+  storeInput(key: string, value: any): void {
     this.storedInputs[key] = value;
     console.log(this.storedInputs);
   }
@@ -191,5 +208,59 @@ export class FormComponent {
     } else {
       this.storedInputs['selectedCheckboxes'].push(option);
     }
+  }
+
+  //Photo upload
+  uploadedPhotos: { src: string | ArrayBuffer | null; main: boolean }[] = [];
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    this.readFile(file);
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    const file = event.dataTransfer?.files[0];
+    if (file) {
+      this.readFile(file);
+    }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+  }
+
+  readFile(file: File): void {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const photo = {
+        src: e.target.result,
+        main: this.uploadedPhotos.length === 0,
+      };
+      this.uploadedPhotos.push(photo);
+      this.storeInput('photos', this.uploadedPhotos);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  setAsMainPhoto(index: number): void {
+    this.uploadedPhotos.forEach((photo, i) => (photo.main = i === index));
+    this.storeInput('photos', this.uploadedPhotos);
+  }
+
+  deletePhoto(index: number): void {
+    this.uploadedPhotos.splice(index, 1);
+    this.storeInput('photos', this.uploadedPhotos);
+  }
+
+  saveToDatabase(): void {
+    this.supabaseService
+      .saveInputs(this.storedInputs)
+      .then(() => {
+        console.log('Data saved to database');
+      })
+      .catch((error) => {
+        console.error('Error saving to database:', error);
+      });
   }
 }

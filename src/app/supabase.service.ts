@@ -185,4 +185,16 @@ export class SupabaseService {
     if (error) console.error(error);
     return data;
   }
+
+  async saveInputs(inputs: any): Promise<void> {
+    const { data, error } = await this.supabase
+      .from('inputs')
+      .insert([{ data: inputs }]);
+
+    if (error) {
+      console.error('Error saving inputs:', error);
+    } else {
+      console.log('Inputs saved successfully:', data);
+    }
+  }
 }

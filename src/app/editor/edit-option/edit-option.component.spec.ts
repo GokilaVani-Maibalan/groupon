@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainSidebarComponent } from './main-sidebar.component';
+import { EditOptionComponent } from './edit-option.component';
 
-describe('MainSidebarComponent', () => {
-  let component: MainSidebarComponent;
-  let fixture: ComponentFixture<MainSidebarComponent>;
+describe('EditOptionComponent', () => {
+  let component: EditOptionComponent;
+  let fixture: ComponentFixture<EditOptionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainSidebarComponent]
+      imports: [EditOptionComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MainSidebarComponent);
+    fixture = TestBed.createComponent(EditOptionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

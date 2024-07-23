@@ -90,9 +90,9 @@
             {{ form_option.option_name }}
           </h5>
           <ul style="list-style-type: none">
-            <li>Regular price:</li>
-            <li>Groupon price:</li>
-            <li>Monthly voucher cap:</li>
+            <li>Regular price: {{ form_option.regular_price }}</li>
+            <li>Groupon price: {{ form_option.discount_price }}</li>
+            <li>Monthly voucher cap: 50</li>
           </ul>
         </div>
         <a (click)="openModal('type1', 0); $event.preventDefault()"
@@ -106,12 +106,20 @@
     <ng-container *ngIf="selectedSection === 2">
       <h2>Which photos would you like to use?</h2>
       <label>
-        <input type="radio" name="values" value="Use my own photo(s)" />Use my
-        own photo(s)
+        <input
+          type="radio"
+          name="values"
+          value="Use my own photo(s)"
+          (change)="onPhotoSelect('option 1')"
+        />Use my own photo(s)
       </label>
       <label>
-        <input type="radio" name="values" value="Choose a stock photo" />Choose
-        a stock photo
+        <input
+          type="radio"
+          name="values"
+          value="Choose a stock photo"
+          (change)="onPhotoSelect('option 2')"
+        />Choose a stock photo
       </label>
       <p
         style="
@@ -124,7 +132,93 @@
         their experience and gives you a chance to show off your business.
       </p>
       <hr />
-      <div>
+
+      <!--Option1 own photo-->
+      <div *ngIf="selectedPhotoOption === 'option 1'">
+        <h4>Upload Photos</h4>
+        <div
+          class="upload-container"
+          (drop)="onDrop($event)"
+          (dragover)="onDragOver($event)"
+        >
+          <input
+            type="file"
+            id="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            hidden
+          />
+          <label for="file" class="upload-label">
+            <div class="upload-placeholder">
+              <img src="assets/upload-icon.png" alt="Upload Icon" />
+              <p>
+                Drag and Drop<br />or
+                <span class="browse-files">browse files</span>
+              </p>
+            </div>
+          </label>
+        </div>
+
+        <div class="uploaded-photos" *ngIf="uploadedPhotos.length > 0">
+          <h3>Successful uploads ({{ uploadedPhotos.length }})</h3>
+          <p>Select which photo should appear first on your campaign page.</p>
+          <div
+            class="photo-item"
+            *ngFor="let photo of uploadedPhotos; let i = index"
+          >
+            <img
+              [src]="photo.src"
+              alt="Uploaded Photo"
+              class="uploaded-image"
+            />
+            <div class="photo-actions">
+              <button
+                (click)="setAsMainPhoto(i)"
+                class="btn-main-photo"
+                *ngIf="photo.main"
+              >
+                Main Photo
+              </button>
+              <button
+                (click)="setAsMainPhoto(i)"
+                class="btn-set-main"
+                *ngIf="!photo.main"
+              >
+                Set as Main
+              </button>
+              <button (click)="deletePhoto(i)" class="btn-delete-photo">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="terms">
+            <input type="checkbox" id="terms" name="terms" />
+            <label for="terms"
+              >By uploading images, I represent and warrant that I have full
+              ownership and/or licensing rights to the images and authorize the
+              use subject to the Terms and Conditions.</label
+            >
+          </div>
+          x
+        </div>
+
+        <ul style="list-style-type: square">
+          <li>Maximum 20 photos</li>
+          <li>All photos must be in landscape (horizontal) orientation.</li>
+          <li>Accepted file types: jpg or png</li>
+          <li>Maximum file size: 5 MB</li>
+          <li>Minimum resolution: 700 x 420 px</li>
+          <li>Only upload photos you own (no photos from Yelp or Google).</li>
+        </ul>
+        <br />
+        <p>
+          Photos that don’t meet Groupon's requirements may be replaced with a
+          photo from our stock library.
+        </p>
+      </div>
+
+      <!--Option2 Stock-->
+      <div *ngIf="selectedPhotoOption === 'option 2'">
         <h4>Choose from our stock photo library</h4>
 
         <p
@@ -923,6 +1017,9 @@
       </div>
       <hr style="color: rgb(191, 187, 187)" />
       <h5>Photos</h5>
+      <div class="uploaded-photos" *ngFor="let photo of storedInputs['photos']">
+        <img [src]="photo.src" alt="Uploaded Photo" class="uploaded-image" />
+      </div>
       <hr style="color: rgb(191, 187, 187)" />
       <h5>Highlights</h5>
       <p>{{ storedInputs["highlights"] }}</p>
@@ -956,11 +1053,6 @@
       </footer>
     </ng-container>
   </div>
-
-  <!-- <footer class="fixed-footer">
-    <button class="prev">Previous</button>
-    <button class="next">Next</button>
-  </footer> -->
 </div>
 
 <!-- Modal structure -->

@@ -1,0 +1,48 @@
+.top-nav {
+  
+    justify-content: space-between;
+    align-items:end;
+    background-color: #46da46;
+    border-bottom: 2px solid rgb(211, 208, 208);
+    color: rgb(254, 252, 252);
+    padding: 1.3125rem 1.5rem;
+    font-size: 1.2rem;
+  }
+  
+  .nav-title {
+    font-weight: bold;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .nav-button {
+    background: none;
+    border: none;
+    color: rgb(253, 252, 252);
+  
+    cursor: pointer;
+    font-size: small;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ensuring the container takes up the full height */
+    font-weight: 300;
+    width: 100%
+  }
+  .side-nav {
+    width: 250px;
+    background-color: #f4f4f4;
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+    height: 100%; 
+    box-sizing: border-box; 
+    overflow-y: auto;
+  }
+  

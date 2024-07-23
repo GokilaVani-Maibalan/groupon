@@ -12,6 +12,7 @@ import { FormComponent } from './form/form.component';
 import { TemplatesComponent } from './templates/templates.component';
 import { DashboardComponent } from './main-page/dashboard/dashboard.component';
 import { EditCampaignComponent } from './editor/edit-campaign/edit-campaign.component';
+import { EditOptionComponent } from './editor/edit-option/edit-option.component';
 
 const routes: Routes = [
   // { path: 'signup', component: SignupComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'forms', component: FormComponent },
   { path: 'templates', component: TemplatesComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'editor', component: EditCampaignComponent },
+  { path: 'editor/:id', component: EditCampaignComponent },
+  { path: 'detail/:field', component: EditOptionComponent },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
 ];

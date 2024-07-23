@@ -17,31 +17,56 @@
 </nav>
 <div class="container">
   <div class="main-content">
-    <h5>Up to 50% on Pancake/ Waffle House at Lucy Pancake cafe</h5>
-    <div style="display: flex; justify-content: space-between">
-      <h5>Photos(3)</h5>
-      <button class="edit-button">Edit</button>
+    <div *ngIf="item">
+      <h2>{{ item.name }}</h2>
+      <div>
+        <div style="display: flex; justify-content: space-between">
+          <h5>Photos(3)</h5>
+          <button class="edit-button">Edit</button>
+        </div>
+        <hr />
+        <div *ngFor="let option of item.details; let i = index">
+          <div style="display: flex; justify-content: space-between">
+            <h5>Option {{ option.id }}</h5>
+            <button class="edit-button" (click)="editOption('Option', option)">
+              Edit
+            </button>
+          </div>
+          <hr />
+
+          <p>{{ option.option_name }}</p>
+          <p>Regular price : {{ option.price.regular_price }}</p>
+          <p>Discount price : {{ option.price.discount_price }}</p>
+          <p>Discount : {{ option.price.discount }}</p>
+          <p>Monthly Voucher : {{ option.price.monthly_voucher }}</p>
+        </div>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between">
+          <h5>Highlights</h5>
+          <button
+            class="edit-button"
+            (click)="editOption('Highlights', item.highlights)"
+          >
+            Edit
+          </button>
+        </div>
+        <hr />
+        <p>{{ item.highlights }}</p>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between">
+          <h5>Description</h5>
+          <button
+            class="edit-button"
+            (click)="editOption('Description', item.description)"
+          >
+            Edit
+          </button>
+        </div>
+        <hr />
+        <p>{{ item.description }}</p>
+      </div>
     </div>
-    <hr />
-    <div style="display: flex; justify-content: space-between">
-      <h5>Option1</h5>
-      <button class="edit-button">Edit</button>
-    </div>
-    <hr />
-    <div style="display: flex; justify-content: space-between">
-      <h5>Option 2</h5>
-      <button class="edit-button">Edit</button>
-    </div>
-    <hr />
-    <div style="display: flex; justify-content: space-between">
-      <h5>Highlights</h5>
-      <button class="edit-button">Edit</button>
-    </div>
-    <hr />
-    <div style="display: flex; justify-content: space-between">
-      <h5>Description</h5>
-      <button class="edit-button">Edit</button>
-    </div>
-    <hr />
   </div>
 </div>
