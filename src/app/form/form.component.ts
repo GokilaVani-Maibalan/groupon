@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
 
 @Component({
@@ -55,7 +55,8 @@ export class FormComponent {
   onNextClick() {
     if (this.selectedSection === 8) {
       this.saveToDatabase();
-      this.selectedSection++;
+      // this.selectedSection++;
+      this.router.navigate(['/dashboard']);
     }
     if (this.selectedSection === 1) {
       this.storeInput('options', this.selectedFormOption);
@@ -94,7 +95,8 @@ export class FormComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {

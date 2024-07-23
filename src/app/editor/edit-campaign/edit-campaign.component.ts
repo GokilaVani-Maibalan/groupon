@@ -28,6 +28,21 @@ export class EditCampaignComponent {
     this.router.navigate(['/detail', field], { state: { data: data } });
   }
 
+  handleUpdate(field: string, updatedData: any) {
+    if (field === 'Description') {
+      this.item.description = updatedData;
+    } else if (field === 'Highlights') {
+      this.item.highlights = updatedData;
+    } else if (field === 'Option') {
+      const index = this.item.details.findIndex(
+        (detail: any) => detail.id === updatedData.id
+      );
+      if (index !== -1) {
+        this.item.details[index] = updatedData;
+      }
+    }
+  }
+
   onHelpClick() {
     alert('Help clicked');
   }

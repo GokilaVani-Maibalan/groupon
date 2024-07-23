@@ -29,12 +29,16 @@
     align-items: center;
     gap: 5px;
   }
+  .content{
+    margin-left: 30px;
+  }
   .container {
     display: flex;
     flex-direction: column;
     height: 100vh; /* Ensuring the container takes up the full height */
     font-weight: 300;
-    width: 100%
+    width: 100%;
+   
   }
   .side-nav {
     width: 250px;

@@ -23,8 +23,8 @@
         <button class="nav-button">New Campaign</button>
       </div>
     </nav>
-    <div>
-      <ng-container *ngIf="selectedSection === 1">
+    <div class="content">
+      <ng-container *ngIf="selectedSection === 1" style="margin-left: 30px">
         <div *ngFor="let item of campaigns; let i = index">
           <div *ngIf="item.isActive === true">
             <a (click)="onItemClick(item)">

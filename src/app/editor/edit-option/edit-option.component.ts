@@ -1,7 +1,8 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-edit-option',
   standalone: true,
@@ -15,7 +16,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EditOptionComponent {
   field: string = '';
   data: any;
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
     this.field = this.route.snapshot.paramMap.get('field')!;
@@ -28,10 +33,12 @@ export class EditOptionComponent {
   }
 
   onCancelClick() {
-    alert('Cancel clicked');
+    this.location.back();
   }
 
   onDoneClick() {
-    alert('Done clicked');
+    this.router.navigate(['/editor'], {
+      state: { field: this.field, updatedData: this.data },
+    });
   }
 }
